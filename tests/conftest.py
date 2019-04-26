@@ -1,15 +1,21 @@
+"""
+COntains fixtures for tests
+"""
 import pytest
 from app import create_app, db
 from app.config import TestConfig
 
 @pytest.fixture(scope='function')
 def app():
-    app = create_app(TestConfig)
-    app_context = app.app_context()
+    """
+    Create Flask app fixture
+    """
+    app_ = create_app(TestConfig)
+    app_context = app_.app_context()
     app_context.push()
     db.create_all()
 
-    yield app
+    yield app_
 
     db.session.remove()
     db.drop_all()
@@ -17,5 +23,8 @@ def app():
 
 
 @pytest.fixture(scope="function")
-def client(app):
-    return app.test_client()
+def client(app_):
+    """
+    Create client for app
+    """
+    return app_.test_client()

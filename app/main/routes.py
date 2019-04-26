@@ -1,5 +1,8 @@
+"""
+Contains routes for main purpose of app
+"""
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from app import db
 from app.main.forms import EditProfileForm, PostForm
@@ -10,6 +13,9 @@ from app.main import bp
 
 @bp.before_request
 def before_request():
+    """
+    update last_seen for User before handling request
+    """
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
@@ -20,6 +26,9 @@ def before_request():
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required 
 def index():
+    """
+    Route for index page
+    """
     form = PostForm()
     if form.validate_on_submit():
         post = Post(body=form.post.data, author=current_user)
@@ -37,6 +46,9 @@ def index():
 @bp.route('/explore')
 @login_required
 def explore():
+    """
+    Route for explore
+    """
     posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template('index.html', title='Explore', posts=posts)
 
@@ -45,17 +57,23 @@ def explore():
 @bp.route('/user/<username>')
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    """
+    Route for user
+    """
+    user_ = User.query.filter_by(username=username).first_or_404()
     posts = current_user.posts.all()
-    return render_template('user.html', user=user, posts=posts)
+    return render_template('user.html', user=user_, posts=posts)
 
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    """
+    Route for editing user profile
+    """
     form = EditProfileForm(current_user.username)
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #pylint: disable=no-else-return
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         db.session.commit()

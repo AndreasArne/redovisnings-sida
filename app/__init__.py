@@ -1,3 +1,7 @@
+"""
+Factory for application
+"""
+
 import os
 import logging
 from logging.handlers import RotatingFileHandler
@@ -20,6 +24,9 @@ moment = Moment()
 
 
 def create_app(config_class=ProdConfig):
+    """
+    Create flask app, init addons, blueprints and setup logging
+    """
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -28,7 +35,7 @@ def create_app(config_class=ProdConfig):
     login.init_app(app)
     moment.init_app(app)
 
-
+    #pylint: disable=wrong-import-position, cyclic-import
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
@@ -37,6 +44,7 @@ def create_app(config_class=ProdConfig):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+    #pylint: enable=wrong-import-position, cyclic-import
 
 
     if not app.debug and not app.testing:
@@ -55,5 +63,4 @@ def create_app(config_class=ProdConfig):
     return app
 
 
-
-from app import models
+from app import models #pylint: disable=wrong-import-position, cyclic-import
