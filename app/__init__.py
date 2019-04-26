@@ -1,4 +1,5 @@
 import os
+import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -38,7 +39,7 @@ def create_app(config_class=ProdConfig):
     app.register_blueprint(main_bp)
 
 
-    if not app.debug and app.testing:
+    if not app.debug and not app.testing:
         if not os.path.exists('logs'):
             os.mkdir('logs')
         file_handler = RotatingFileHandler('logs/me_page.log', maxBytes=10240,
