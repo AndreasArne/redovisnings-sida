@@ -73,17 +73,10 @@ help:
 
 
 
-# target: generate_site   		 - Generate html files from DB.
-.PHONY: generate_site
-generate_site:
-	@${py} -m generator.site_generator
-
-
-
 # target: validate                - Validate code with pylint
 .PHONY: validate
 validate:
-	@pylint --rcfile=.pylintrc generator tests
+	@pylint --rcfile=.pylintrc app tests
 
 
 
@@ -91,7 +84,8 @@ validate:
 .PHONY: exec-tests
 exec-tests: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
-	@${py} -m coverage run --rcfile=.coveragerc -m pytest
+	@${py} -m coverage run --rcfile=.coveragerc -m py.test
+
 
 
 # target: test                    - Run tests and display code coverage
@@ -115,22 +109,32 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
+	find . -name '.log' -exec rm -fr {} +
 
 	rm -f .coverage
 	rm -rf tests/coverage_html
 
 
 
-# target: install                 - Install all Python packages specified in requirement.txt
+# target: install                 - Install all Python packages specified in requirement.txt (requirements/prod.txt)
 .PHONY: install
 install:
 	${pip} install -r requirements.txt
 
 
-# target: install                 - Install all Python packages specified in requirement.txt
+
+# target: install                 - Install all Python packages specified in requirements/*
 .PHONY: install-dev
 install-dev:
 	${pip} install -r requirements/dev.txt
+
+
+
+# target: install                 - Install all Python packages specified in requirements/{test.txt, prod.txt}
+.PHONY: install-test
+install-test:
+	${pip} install -r requirements/dev.txt
+
 
 
 # target: install-travis           - Install all packages for Travis
