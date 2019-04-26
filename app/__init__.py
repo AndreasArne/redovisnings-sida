@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
-from config import Config
+from app.config import ProdConfig
 
 
 
@@ -18,7 +18,7 @@ moment = Moment()
 
 
 
-def create_app(config_class=Config):
+def create_app(config_class=ProdConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
