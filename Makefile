@@ -109,7 +109,7 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
-	find . -name '.log' -exec rm -fr {} +
+	find . -name '*.log*' -exec rm -fr {} +
 
 	rm -f .coverage
 	rm -rf tests/coverage_html
