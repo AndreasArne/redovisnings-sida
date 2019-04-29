@@ -1,22 +1,36 @@
 """
-COntains tests for app.models.User class
+Contains tests for app.models.User class
 """
+import pytest
 from app.models import User
 
-def test_password_hashing():
+@pytest.fixture
+def user1():
+    return User(
+        username='john',
+        email='john@example.com',
+        about_me="Hello",
+    )
+
+
+def test_new_user(user1):
+    assert user1.email == 'john@example.com'
+    assert user1.username == "john"
+    assert user1.about_me == 'Hello'
+    assert str(user1) == "<User john>"
+
+def test_password_hashing(user1):
     """
     Test setting password for user
     """
-    u = User(username='susan')
-    u.set_password('cat')
-    assert u.check_password('dog') is False
-    assert u.check_password('cat') is True
+    user1.set_password('cat')
+    assert user1.check_password('dog') is False
+    assert user1.check_password('cat') is True
 
-def test_avatar():
+def test_avatar(user1):
     """
     Test creation of Gravatar URL
     """
-    u = User(username='john', email='john@example.com')
-    assert u.avatar(128) == ('https://www.gravatar.com/avatar/'
+    assert user1.avatar(128) == ('https://www.gravatar.com/avatar/'
                              'd4c74594d841139328695756648b6bd6'
                              '?d=retro&s=128')
