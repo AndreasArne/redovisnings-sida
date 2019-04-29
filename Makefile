@@ -85,6 +85,7 @@ validate:
 exec-tests: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
 	@${py} -m coverage run --rcfile=.coveragerc -m py.test
+	$(MAKE) clean-py
 
 
 
@@ -92,6 +93,7 @@ exec-tests: clean
 .PHONY: test
 test: validate exec-tests
 	${py} -m coverage report  --rcfile=.coveragerc
+	$(MAKE) clean-cov
 
 
 
@@ -102,17 +104,28 @@ test-html: exec-tests
 
 
 
-# target: clean                   - Remove all generated files
-.PHONY: clean
-clean:
+# target: clean-py                   - Remove generated python files
+.PHONY: clean-py
+clean-py:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
-	find . -name '*.log*' -exec rm -fr {} +
 
+
+
+# target: clean-cov                   - Remove generated coverage files
+.PHONY: clean-cov
+clean-cov:
 	rm -f .coverage
 	rm -rf tests/coverage_html
+
+
+
+# target: clean                   - Remove all generated files
+.PHONY: clean
+clean: clean-py clean-cov
+	find . -name '*~' -exec rm -f {} +
+	find . -name '*.log*' -exec rm -fr {} +
 
 
 
