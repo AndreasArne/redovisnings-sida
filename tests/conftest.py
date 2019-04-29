@@ -23,8 +23,8 @@ def app():
 
 
 @pytest.fixture(scope="function")
-def client(app_):
+def client(app):
     """
     Create client for app
     """
-    return app_.test_client()
+    return app.test_client()
