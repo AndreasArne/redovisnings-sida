@@ -1,5 +1,5 @@
 """
-Contains tests for app.auth.forms.RegistrationForm class
+Contains tests fortest_app.auth.forms.RegistrationForm class
 """
 import pytest
 from unittest import mock
@@ -9,7 +9,7 @@ from app.auth.forms import RegistrationForm
 
 
 @mock.patch("app.auth.forms.User")
-def test_validate_username(mock_user, app):
+def test_validate_username(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = None
@@ -20,7 +20,7 @@ def test_validate_username(mock_user, app):
 
 
 @mock.patch("app.auth.forms.User")
-def test_validate_username_raise_exception(mock_user, app):
+def test_validate_username_raise_exception(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = "john"
@@ -32,7 +32,7 @@ def test_validate_username_raise_exception(mock_user, app):
 
 
 @mock.patch("app.auth.forms.User")
-def test_validate_email(mock_user, app):
+def test_validate_email(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = None
@@ -43,7 +43,7 @@ def test_validate_email(mock_user, app):
 
 
 @mock.patch("app.auth.forms.User")
-def test_validate_email_raise_exception(mock_user, app):
+def test_validate_email_raise_exception(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = "john@gmail.com"
@@ -51,4 +51,3 @@ def test_validate_email_raise_exception(mock_user, app):
     email.data = "john@gmail.com"
     with pytest.raises(ValidationError):
         RegistrationForm().validate_email(email)
-

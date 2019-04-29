@@ -6,7 +6,7 @@ from app import create_app, db
 from app.config import TestConfig
 
 @pytest.fixture(scope='function')
-def app():
+def test_app():
     """
     Create Flask app fixture
     """
@@ -23,8 +23,8 @@ def app():
 
 
 @pytest.fixture(scope="function")
-def client(app):
+def client(test_app):
     """
     Create client for app
     """
-    return app.test_client()
+    return test_app.test_client()

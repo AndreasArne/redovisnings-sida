@@ -9,7 +9,7 @@ from app.main.forms import EditProfileForm
 
 
 @mock.patch("app.main.forms.User")
-def test_validate_username(mock_user, app):
+def test_validate_username(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = None
@@ -21,7 +21,7 @@ def test_validate_username(mock_user, app):
 
 
 @mock.patch("app.main.forms.User")
-def test_validate_username_raise_exception(mock_user, app):
+def test_validate_username_raise_exception(mock_user, test_app):
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = "john"
