@@ -1,11 +1,15 @@
 """
 Contains tests for app.models.User class
 """
+# pylint: disable=redefined-outer-name
 import pytest
 from app.models import User
 
 @pytest.fixture
 def user1():
+    """
+    User object
+    """
     return User(
         username='john',
         email='john@example.com',
@@ -14,6 +18,9 @@ def user1():
 
 
 def test_new_user(user1):
+    """
+    Test that user object contain correct values
+    """
     assert user1.email == 'john@example.com'
     assert user1.username == "john"
     assert user1.about_me == 'Hello'
@@ -32,5 +39,5 @@ def test_avatar(user1):
     Test creation of Gravatar URL
     """
     assert user1.avatar(128) == ('https://www.gravatar.com/avatar/'
-                             'd4c74594d841139328695756648b6bd6'
-                             '?d=retro&s=128')
+                                 'd4c74594d841139328695756648b6bd6'
+                                 '?d=retro&s=128')

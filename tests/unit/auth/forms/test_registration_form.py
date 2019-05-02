@@ -1,8 +1,9 @@
 """
 Contains tests fortest_app.auth.forms.RegistrationForm class
 """
-import pytest
+# pylint: disable=unused-argument
 from unittest import mock
+import pytest
 from wtforms.validators import ValidationError
 from app.auth.forms import RegistrationForm
 
@@ -10,17 +11,23 @@ from app.auth.forms import RegistrationForm
 
 @mock.patch("app.auth.forms.User")
 def test_validate_username(mock_user, test_app):
+    """
+    Validate username
+    """
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = None
     username = mock.Mock()
     username.data = "john"
-    assert RegistrationForm().validate_username(username) == None
+    assert RegistrationForm().validate_username(username) is None
 
 
 
 @mock.patch("app.auth.forms.User")
 def test_validate_username_raise_exception(mock_user, test_app):
+    """
+    Exception is raised when username already exist.
+    """
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = "john"
@@ -33,17 +40,23 @@ def test_validate_username_raise_exception(mock_user, test_app):
 
 @mock.patch("app.auth.forms.User")
 def test_validate_email(mock_user, test_app):
+    """
+    Validate email
+    """
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = None
     email = mock.Mock()
     email.data = "john@gmail.com"
-    assert RegistrationForm().validate_email(email) == None
+    assert RegistrationForm().validate_email(email) is None
 
 
 
 @mock.patch("app.auth.forms.User")
 def test_validate_email_raise_exception(mock_user, test_app):
+    """
+    Exception is rased when email already exist.
+    """
     first = mock.Mock()
     mock_user.query.filter_by.return_value = first
     first.first.return_value = "john@gmail.com"
