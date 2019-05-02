@@ -1,6 +1,7 @@
 """
-COntains fixtures for tests
+Fixtures for tests
 """
+# pylint: disable=redefined-outer-name
 import pytest
 from app import create_app, db
 from app.config import TestConfig
@@ -10,12 +11,12 @@ def test_app():
     """
     Create Flask app fixture
     """
-    app_ = create_app(TestConfig)
-    app_context = app_.app_context()
+    app = create_app(TestConfig)
+    app_context = app.app_context()
     app_context.push()
     db.create_all()
 
-    yield app_
+    yield app
 
     db.session.remove()
     db.drop_all()

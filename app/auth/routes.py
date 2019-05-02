@@ -33,7 +33,7 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Rout for logging in
+    Route for logging in
     """
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
