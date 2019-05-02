@@ -62,7 +62,7 @@ HELPTEXT = $(ECHO) "$(ACTION)--->" `egrep "^\# target: $(1) " $(THIS_MAKEFILE) |
 #
 # Highlevel targets
 #
-# target: help                    - Displays help with targets available.
+# target: help                         - Displays help with targets available.
 .PHONY:  help
 help:
 	@$(call HELPTEXT,$@)
@@ -73,19 +73,46 @@ help:
 
 
 
-# target: validate                - Validate code with pylint
+# target: validate                      - Validate code with pylint
 .PHONY: validate
 validate:
 	@pylint --rcfile=.pylintrc app tests
 
 
 
+# target: exec-tests-integration        - Run tests in tests/integration with coverage.py
+.PHONY: exec-tests-integration
+exec-tests-integration: clean
+	@$(ECHO) "$(ACTION)---> Running all tests in tests/integration" "$(NO_COLOR)"
+	@${py} \
+		-m coverage run --rcfile=.coveragerc \
+		-m py.test tests/integration
+	$(MAKE) clean-py
+
+
+
+# target: exec-tests-unit	          - Run tests in tests/unit with coverage.py
+.PHONY: exec-tests-unit
+exec-tests-unit: clean
+	@$(ECHO) "$(ACTION)---> Running all tests in tests/unit" "$(NO_COLOR)"
+	@${py} \
+		-m coverage run --rcfile=.coveragerc \
+		-m py.test tests/unit
+	$(MAKE) clean-py
+
+
+
+# target: run-test test=test-file.py - Run one test file
+.PHONY: run-test
+run-test:
+	@${py} \
+		-m pytest --pylint --pylint-rcfile=.pylintrc $(test)
+
+
+
 # target: exec-tests              - Run tests in tests/runner.py with coverage.py
 .PHONY: exec-tests
-exec-tests: clean
-	@$(ECHO) "$(ACTION)---> Running all tests in tests/" "$(NO_COLOR)"
-	@${py} -m coverage run --rcfile=.coveragerc -m py.test
-	$(MAKE) clean-py
+exec-tests: exec-tests-unit exec-tests-integration
 
 
 
