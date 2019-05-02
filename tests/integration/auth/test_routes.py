@@ -5,34 +5,6 @@ Test routes for routes for authorizing users, app/auth/routes
 import pytest
 from flask import session
 
-
-
-@pytest.fixture
-def user_dict():
-    """
-    Dictionary with user data
-    """
-    data = {
-        "username": "doe",
-        "password": "test",
-        "password2": "test",
-        "email": "doe@example.com",
-    }
-    return data
-
-
-@pytest.fixture
-def register_user_response(client, user_dict):
-    """
-    Register user from user_dict
-    """
-    response = client.post(
-        '/register',
-        data=user_dict,
-        follow_redirects=True,
-    )
-    return response
-
 def test_register_login_login_register_when_logged_in(client, user_dict, register_user_response):
     """
     Test registering a user, loging in as user and try go to register page.
