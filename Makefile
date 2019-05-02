@@ -86,7 +86,7 @@ exec-tests-integration: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/integration" "$(NO_COLOR)"
 	@${py} \
 		-m coverage run --rcfile=.coveragerc \
-		-m py.test tests/integration
+		-m py.test -c pytest.ini tests/integration
 	$(MAKE) clean-py
 
 
@@ -97,7 +97,7 @@ exec-tests-unit: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/unit" "$(NO_COLOR)"
 	@${py} \
 		-m coverage run --rcfile=.coveragerc \
-		-m py.test tests/unit
+		-m py.test -c pytest.ini tests/unit
 	$(MAKE) clean-py
 
 
@@ -137,6 +137,7 @@ clean-py:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
+	find . -name '.pytest_cache' -exec rm -fr {} +
 
 
 
