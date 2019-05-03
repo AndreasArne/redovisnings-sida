@@ -1,10 +1,12 @@
 """
-Contains Prod, Dev and Test config classes
+Contains Prod, Dev and Test config classes.
+Also Custom class for logging, RequestFormatter.
 """
 
 import os
+from logging import Formatter
 from dotenv import load_dotenv
-
+from flask import request
 
 
 basedir = os.path.abspath(os.path.dirname(__file__) +  "/..")
@@ -26,8 +28,8 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     """Development configuration"""
-    ENV = "development"
-    DEBUG = True
+    ENV = 'development' # Pointless attribut, needs to be set in environment
+    DEBUG = True # Pointless attribut, needs to be set in environment
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -42,3 +44,17 @@ class TestConfig(Config):
     BCRYPT_LOG_ROUNDS = 4
     # Disable CSRF tokens in the Forms (only valid for testing purposes!)
     WTF_CSRF_ENABLED = False
+
+
+
+class RequestFormatter(Formatter):
+    """
+    Custom class for formatting logger to include url and ip
+    """
+    def format(self, record):
+        """
+        Add url and remote_addr to record
+        """
+        record.url = request.url
+        record.remote_addr = request.remote_addr
+        return super().format(record)

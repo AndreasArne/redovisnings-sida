@@ -6,11 +6,12 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
+from flask.logging import default_handler
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
-from app.config import ProdConfig
+from app.config import ProdConfig, RequestFormatter
 
 
 
@@ -48,17 +49,11 @@ def create_app(config_class=ProdConfig):
 
 
     if not app.debug and not app.testing:
-        if not os.path.exists('logs'):
-            os.mkdir('logs')
-        file_handler = RotatingFileHandler('logs/me_page.log', maxBytes=10240,
-                                           backupCount=10)
-        file_handler.setFormatter(logging.Formatter(
-            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-        file_handler.setLevel(logging.INFO)
-        app.logger.addHandler(file_handler)
-
+        formatter = RequestFormatter(
+            '[%(asctime)s %(levelname)s] %(remote_addr)s requested %(url)s\n: %(message)s [in %(module)s:%(lineno)d]'
+        )
+        default_handler.setFormatter(formatter)
         app.logger.setLevel(logging.INFO)
-        app.logger.info('Redovisnings-sida startup')
 
     return app
 
