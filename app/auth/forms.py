@@ -1,6 +1,7 @@
 """
 Contains forms used for authanticating a User
 """
+from flask import current_app
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
@@ -36,6 +37,7 @@ class RegistrationForm(FlaskForm):
         """
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
+            current_app.logger.debug("Username already exist. {}".format(user))
             raise ValidationError('Please use a different username.')
 
     def validate_email(self, email):
@@ -44,4 +46,5 @@ class RegistrationForm(FlaskForm):
         """
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
+            current_app.logger.debug("Email already exist in a user. {}".format(user))
             raise ValidationError('Please use a different email address.')

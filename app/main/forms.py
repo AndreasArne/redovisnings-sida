@@ -1,6 +1,7 @@
 """
 Contains form for main purpose of application
 """
+from flask import current_app
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, Length, DataRequired
@@ -37,4 +38,5 @@ class EditProfileForm(FlaskForm):
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
+                current_app.logger.debug("Username already exist. {}".format(user))
                 raise ValidationError('Please use a different username.')

@@ -2,7 +2,7 @@
 Contains routes for main purpose of app
 """
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from app import db
 from app.main.forms import EditProfileForm, PostForm
@@ -18,6 +18,7 @@ def before_request():
     """
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
+        current_app.logger.debug("{} is authenticated".format(current_user))
         db.session.commit()
 
 
@@ -32,6 +33,7 @@ def index():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(body=form.post.data, author=current_user)
+        current_app.logger.debug("{}".format(post))
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')

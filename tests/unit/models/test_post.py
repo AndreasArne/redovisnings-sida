@@ -23,4 +23,4 @@ def test_new_post(post1):
     """
     assert post1.title == 'First post'
     assert post1.body == "Hello this is my firtst post"
-    assert str(post1) == "<Post Hello this is my firtst post>"
+    assert str(post1) == "<Post: First post: Hello this is my firtst post By user_id None>"

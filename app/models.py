@@ -4,6 +4,7 @@ Contains Databse model classes
 
 from hashlib import md5
 from datetime import datetime
+from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import db, login
@@ -21,7 +22,7 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}, {}>'.format(self.username, self.email)
     
     def set_password(self, password):
         """
@@ -33,6 +34,7 @@ class User(UserMixin, db.Model):
         """
         Check if password hash matches set password
         """
+        current_app.logger.debug("Checking password {}".format(password))
         return check_password_hash(self.password_hash, password)
 
     @staticmethod
@@ -48,8 +50,10 @@ class User(UserMixin, db.Model):
         Return Gravatar URL based on email
         """
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(
+        url = 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(
             digest, size)
+        current_app.logger.debug("Get gravatar {}".format(url))
+        return url
 
 class Post(db.Model):
     """
@@ -62,4 +66,4 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Post: {}: {} By user_id {}>'.format(self.title, self.body, self.user_id)
