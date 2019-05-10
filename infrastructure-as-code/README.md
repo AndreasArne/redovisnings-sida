@@ -8,8 +8,11 @@ Man behöver manuellt skapa en server på valfri molntjänst, kopiera över file
 4-5 installera program, körs när server skapas som ny användare
 6 setup databas, körs när server skapas som ny användare
 
+MANUELLT!!! LÅT DE BARA FÖLJA EMIL!!
+
 #### Tankar
 
 Packer för skripts 1-3, Terraform för att skapa servrar och installera packer image och Kubernetes för att orkestrera docker containrar på servrarna.
 Skrips 4 är docker image.
+
 

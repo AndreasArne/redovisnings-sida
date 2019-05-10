@@ -8,7 +8,7 @@ chmod 700 /home/deploy/.ssh
 usermod -s /bin/bash deploy
 
 #echo -e "<password>\n<password>" | passwd deploy # echo "<password>" | passwd --stdin deploy om nyare version
-echo "deploy:aaaa" | chpasswd
+echo "deploy:<passwd>" | chpasswd
 usermod -aG sudo deploy # lägg till i sudo grupp
 
 # har redan lagt  ssh nyckel, när droplet skapades. Kopiera från root
