@@ -73,16 +73,25 @@ help:
 
 
 
-# target: validate                      - Validate code with pylint
+# target: info                         - Displays versions.
+.PHONY: info
+info:
+	@${py} --version
+	@${py} -m pip --version
+#@virtualenv --version
+
+
+
+# target: validate                     - Validate code with pylint
 .PHONY: validate
 validate:
 	@pylint --rcfile=.pylintrc app tests
 
 
 
-# target: exec-tests-integration        - Run tests in tests/integration with coverage.py
-.PHONY: exec-tests-integration
-exec-tests-integration: clean
+# target: test-integration             - Run tests in tests/integration with coverage.py
+.PHONY: test-integration
+test-integration: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/integration" "$(NO_COLOR)"
 	@${py} \
 		-m coverage run --rcfile=.coveragerc \
@@ -91,9 +100,9 @@ exec-tests-integration: clean
 
 
 
-# target: exec-tests-unit	          - Run tests in tests/unit with coverage.py
-.PHONY: exec-tests-unit
-exec-tests-unit: clean
+# target: test-unit                    - Run tests in tests/unit with coverage.py
+.PHONY: test-unit
+test-unit: clean
 	@$(ECHO) "$(ACTION)---> Running all tests in tests/unit" "$(NO_COLOR)"
 	@${py} \
 		-m coverage run --rcfile=.coveragerc \
@@ -102,7 +111,7 @@ exec-tests-unit: clean
 
 
 
-# target: run-test test=test-file.py - Run one test file
+# target: run-test test=test-file.py   - Run one test file
 .PHONY: run-test
 run-test:
 	@${py} \
@@ -110,13 +119,13 @@ run-test:
 
 
 
-# target: exec-tests              - Run tests in tests/runner.py with coverage.py
+## target: exec-tests                   - Run all tests in tests/ with coverage.py
 .PHONY: exec-tests
-exec-tests: exec-tests-unit exec-tests-integration
+exec-tests: test-unit test-integration
 
 
 
-# target: test                    - Run tests and display code coverage
+# target: test                         - Run tests and display code coverage
 .PHONY: test
 test: validate exec-tests
 	${py} -m coverage report  --rcfile=.coveragerc
@@ -124,14 +133,14 @@ test: validate exec-tests
 
 
 
-# target: test-html               - Run tests and display detailed code coverage with html
+## target: test-html                    - Run tests and display detailed code coverage with html
 .PHONY: test-html
 test-html: exec-tests
 	${py} -m coverage html  --rcfile=.coveragerc && ${browser} tests/coverage_html/index.html &
 
 
 
-# target: clean-py                   - Remove generated python files
+## target: clean-py                     - Remove generated python files
 .PHONY: clean-py
 clean-py:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -141,7 +150,7 @@ clean-py:
 
 
 
-# target: clean-cov                   - Remove generated coverage files
+## target: clean-cov                    - Remove generated coverage files
 .PHONY: clean-cov
 clean-cov:
 	rm -f .coverage
@@ -149,7 +158,7 @@ clean-cov:
 
 
 
-# target: clean                   - Remove all generated files
+# target: clean                        - Remove all generated files
 .PHONY: clean
 clean: clean-py clean-cov
 	find . -name '*~' -exec rm -f {} +
@@ -157,28 +166,24 @@ clean: clean-py clean-cov
 
 
 
-# target: install                 - Install all Python packages specified in requirement.txt (requirements/prod.txt)
+# target: install                      - Install all Python packages specified in requirement.txt (requirements/prod.txt)
 .PHONY: install
 install:
 	${pip} install -r requirements.txt
 
 
 
-# target: install                 - Install all Python packages specified in requirements/*
+# target: install-dev                  - Install all Python packages specified in requirements/*
 .PHONY: install-dev
 install-dev:
 	${pip} install -r requirements/dev.txt
 
 
 
-# target: install                 - Install all Python packages specified in requirements/{test.txt, prod.txt}
+# target: install-test                 - Install all Python packages specified in requirements/{test.txt, prod.txt}
 .PHONY: install-test
 install-test:
 	${pip} install -r requirements/dev.txt
 
 
 
-# target: install-travis           - Install all packages for Travis
-# .PHONY: install-travis
-# install-travis: install
-	# sudo apt-get update
