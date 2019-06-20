@@ -1,24 +1,28 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/python:3.5
+    build:
+        docker:
+            - image: circleci/python:3.5
 
-    working_directory: ~/repo
+        working_directory: ~/repo
 
-    steps:
-      # Step 1: obtain repo from GitHub
-      - checkout
-      # Step 2: create virtual env and install dependencies
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements/test.txt
-      # Step 3: run linter and tests
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            make validate exec-tests
+        steps:
+            # step 1: Print environemnt info
+            - run:
+                name: Print info
+                command: make info
+            # Step 2: obtain repo from GitHub
+            - checkout
+            # Step 3: create virtual env and install dependencies
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements/test.txt
+            # Step 4: run linter and tests
+            - run:
+                name: run tests
+                command: |
+                    . venv/bin/activate
+                    make validate exec-tests
