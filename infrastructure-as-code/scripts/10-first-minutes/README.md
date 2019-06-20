@@ -15,7 +15,7 @@ Gå igenom skripten och ersätt alla `<...>` med passande innehåll.
 1. Skapa en DO droplet, glöm inte att klicka i din ssh nyckel.
 
 2. Kopiera över mappen med skripten till din droplet.
-    - ` scp -r 10-first-minutes root@<droplet-ip>:`
+    - `scp -r 10-first-minutes root@<droplet-ip>:`
 
 3. Logga in på servern med ssh.
     - `ssh root@<ip>`
