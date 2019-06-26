@@ -6,5 +6,6 @@ python3 -m venv venv
 pip install -r requirements.txt
 
 echo "export FLASK_APP=me_page.py" >> ~/.profile 
+cp infrastructure-as-code/scripts/resources/.env .
 source ~/.profile
 flask --help
