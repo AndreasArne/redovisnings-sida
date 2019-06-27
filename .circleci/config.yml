@@ -7,12 +7,12 @@ jobs:
         working_directory: ~/repo
 
         steps:
-            # step 1: Print environemnt info
+            # Step 1: obtain repo from GitHub
+            - checkout
+            # step 2: Print environemnt info
             - run:
                 name: Print info
                 command: make info
-            # Step 2: obtain repo from GitHub
-            - checkout
             # Step 3: create virtual env and install dependencies
             - run:
                 name: install dependencies
