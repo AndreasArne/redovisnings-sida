@@ -6,7 +6,7 @@ Mappen innehåller skript som gör utför det mesta från https://dbwebb.se/kuns
 
 Att notera, skripten utgår ifrån att du har lagt in din ssh nyckel på Digital Ocean och skapar servern med dem. Den kopieras från root användaren till användaren som skapas i skripten.
 
-Gå igenom skripten och ersätt alla `<...>` med passande innehåll.
+I vissa av skripten skapas det variabler överst i filerna, ersätt värdena i dem till något passande, ex. `<password>` ska ersättas med ett lösenord.
 
 
 

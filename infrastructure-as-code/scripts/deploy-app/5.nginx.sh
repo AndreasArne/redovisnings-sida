@@ -1,20 +1,25 @@
-cp infrastructure-as-code/scripts/resources/nginx.conf /etc/nginx/sites-available/<filename>
+conf_filename="<filename>"
+domain="<domain>"
+well_known_path="<.well-known-path>"
+static_path="<static-folder-path>"
 
-cd /etc/nginx/sites-enabled && sudo ln -s /etc/nginx/sites-available/<filename>
+cat infrastructure-as-code/scripts/resources/nginx.conf | sed "s/<domain>/$domain/; s|<.well-known-path>|$well_known_path|" > /etc/nginx/sites-available/$conf_filename
+
+cd /etc/nginx/sites-enabled && sudo ln -s /etc/nginx/sites-available/$conf_filename
 
 sudo nginx -t && sudo service nginx restart
 
 
 
 # https
-sed -i 's/# deb http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free/deb http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free/' /etc/apt/sources.list
-sed -i 's/# http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free/http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free/' /etc/apt/sources.list
+sed -i 's|# deb http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free|deb http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free|' /etc/apt/sources.list
+sed -i 's|# http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free|http://mirrors.digitalocean.com/debian stretch-backports main contrib non-free|' /etc/apt/sources.list
 
 sudo apt-get update
 sudo apt-get install python-certbot-nginx -t stretch-backports
 
 sudo certbot --nginx # need manuell input
 
-cat infrastructure-as-code/scripts/resources/nginx_https.conf > /etc/nginx/sites-available/<filename>
+cat infrastructure-as-code/scripts/resources/nginx_https.conf | sed "s/<domain>/$domain/; s|<.well-known-path>|$well_known_path|; s|<static-path>|$static_path|" > /etc/nginx/sites-available/$conf_filename
 
 sudo nginx -t && sudo service nginx restart

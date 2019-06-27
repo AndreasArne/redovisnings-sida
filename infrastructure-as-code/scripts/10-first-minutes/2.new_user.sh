@@ -1,3 +1,5 @@
+password="<password>"
+
 # Remove dfault user and add new user Deploy
 apt-get -y remove --purge unscd
 userdel -r debian
@@ -9,7 +11,7 @@ chmod 700 /home/deploy/.ssh
 usermod -s /bin/bash deploy # Set default terminal for user
 
 # Set user deploy password
-echo "deploy:<password>" | chpasswd
+echo "deploy:$password" | chpasswd
 usermod -aG sudo deploy # add to sudo group
 
 # Copies ssh keys that DO added during creation

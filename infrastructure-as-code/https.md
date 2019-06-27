@@ -1,4 +1,3 @@
-följ https://dbwebb.se/kunskap/nodejs-api-med-express#https
 
 https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
 
