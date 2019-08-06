@@ -1,8 +1,6 @@
 password="<password>"
 
-# Remove dfault user and add new user Deploy
-apt-get -y remove --purge unscd
-userdel -r debian
+# Create user
 useradd deploy
 mkdir /home/deploy
 mkdir /home/deploy/.ssh
@@ -14,8 +12,8 @@ usermod -s /bin/bash deploy # Set default terminal for user
 echo "deploy:$password" | chpasswd
 usermod -aG sudo deploy # add to sudo group
 
-# Copies ssh keys that DO added during creation
-cp ~/.ssh/authorized_keys /home/deploy/.ssh/
+# Copies ssh keys added during creation
+cp /home/ubuntu/.ssh/authorized_keys /home/deploy/.ssh/
 chown deploy:deploy /home/deploy -R 
 chmod 400 /home/deploy/.ssh/authorized_keys
 
