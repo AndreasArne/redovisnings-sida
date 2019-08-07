@@ -2,8 +2,16 @@
 Driftsätta en Flask app, som skript
 ====================================
 
-Logga in på din server med `deploy` användaren, klona git repot, kör sen skripten i ordning. Stå i repots root mapp när du kör skripten.
+1. Logga in på server som `deploy``.
 
-Du behöver peka ditt domän namn till servern innan du kör skript 5.
+2. Klona git repot och ställ dig i root mappen för repot.
 
-**5.nginx.sh** Behöver exekveras med `sudo`.
+3. Kör skript 1-4.
+
+4. Peka om ditt domän namn till din server.
+
+(För AWS kan du behöva uppdatera instansens security group att tillåta TCP/UPD trafik)
+
+5. Kör skript 5 med sudo. Det krävs lite manuell input för https.
+
+6. Profit!!

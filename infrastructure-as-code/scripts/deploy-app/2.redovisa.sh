@@ -1,9 +1,9 @@
 # No / in the values
-secret_key=$(python3 -c "import uuid; print(uuid.uuid4().hex)")
 db_user="<user>"
 db_password="<password>"
 db_name="db_name"
 
+secret_key=$(python3 -c "import uuid; print(uuid.uuid4().hex)")
 # cd ~ && git clone https://github.com/AndreasArne/redovisnings-sida.git
 # cd redovisnings-sida 
 git fetch --tags
