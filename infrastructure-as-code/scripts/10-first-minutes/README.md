@@ -24,7 +24,7 @@ I vissa av skripten skapas det variabler överst i filerna, ersätt värdena i d
 
 5. Exekvera skripten i ordning.
 
-6. Logga ut från servern och logga in igen med `deploy` användaren för att raden original användaren, `userdel -r ubuntu`.
+6. Logga ut från servern och logga in igen med `deploy` användaren för att raden original användaren, `sudo userdel -r admin`.
 
 7.  Profit!
 

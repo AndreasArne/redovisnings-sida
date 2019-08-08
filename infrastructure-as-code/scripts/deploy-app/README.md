@@ -10,7 +10,7 @@ Driftsätta en Flask app, som skript
 
 4. Peka om ditt domän namn till din server.
 
-(För AWS kan du behöva uppdatera instansens security group att tillåta TCP/UPD trafik)
+(För AWS kan du behöva uppdatera instansens security group att tillåta TCP/UPD trafik och behöver en Elastic IP)
 
 5. Kör skript 5 med sudo. Det krävs lite manuell input för https.
 

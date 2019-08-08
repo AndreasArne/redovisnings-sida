@@ -12,11 +12,11 @@ sudo nginx -t && sudo service nginx restart
 
 
 # https
-sudo apt-get install software-properties-common && \
-    add-apt-repository universe && \
-    add-apt-repository -y ppa:certbot/certbot && \
-    apt-get update
-sudo apt-get install -y python-certbot-nginx
+echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+echo "deb http://deb.debian.org/debian stretch-backports main contrib non-free" >> /etc/apt/sources.list
+
+sudo apt-get update
+sudo apt-get install -y python-certbot-nginx -t stretch-backports
 
 sudo certbot --nginx # need manuell input
 
