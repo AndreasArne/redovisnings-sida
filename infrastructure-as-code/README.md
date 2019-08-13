@@ -3,7 +3,7 @@ Skapa och konfigurera servrar
 
 ### scripts
 
-För alla skript behöver du först gå igenom dem och ersätta alla ``<...>`, som tilldelas till variabler överst i filerna. med relevant data. T.ex. <password> ska ersättas med ett lösenord och <domain> ska ersättas av domännamnet du ska använda för din webbsida. **Ersätt inte lösenorden lokalt och pusha till git!!!** Byt ut dem när du filerna på servern.
+För alla skript behöver du först gå igenom dem och ersätta alla `<...>`, som tilldelas till variabler överst i filerna. med relevant data. T.ex. <password> ska ersättas med ett lösenord och <domain> ska ersättas av domännamnet du ska använda för din webbsida. **Ersätt inte lösenorden lokalt och pusha till git!!!** Byt ut dem när du filerna på servern.
 
 **10-first-minutes** innehåller skript för att sätta upp ny skapad server men ny användare m.m.
 
