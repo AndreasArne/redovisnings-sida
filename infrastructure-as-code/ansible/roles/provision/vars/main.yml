@@ -1,0 +1,7 @@
+---
+    instance_type: t2.micro
+    security_group: webserver
+    image: ami-0f5c5066b40f2414e
+    keypair: work-laptop 
+    region: us-east-1
+    count: 1
