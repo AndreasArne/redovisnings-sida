@@ -20,6 +20,17 @@ Use `insert_aws_keys_in_config.sh` to paste AWS credentials from clipboard into 
 ## ansible.cfg
 
 Config for ansible.
+Example of relevant settings:
+```
+[defaults]
+host_key_checking = False
+private_key_file = <path-to-ssh-pub-file>
+ansible_python_interpreter = ../../.venv/bin/python
+
+[inventory]
+enable_plugins = ini
+```
+
 Needed the following for Ansible to read the `hosts` file (which parser it should use to read the file).
 ```
 [inventory]
