@@ -1,3 +1,5 @@
+Needed to add ssh pub file to ssh agent to ssh, https://stackoverflow.com/a/51500802.
+
 ## Ansible vault
 
 Add Ansible vault password as ENV variable, `ANSIBLE_VAULT_PASSWORD_FILE=<path-to-file>`. 
@@ -37,11 +39,17 @@ Needed the following for Ansible to read the `hosts` file (which parser it shoul
 enable_plugins = ini
 ```
 
-To be able to run Ansible from a venv, the following is needed.
+To be able to run commands locally using venv, the following is needed.
 ```
 ansible_python_interpreter = ../../.venv/bin/python
 ```
 
+Problems with ssh and ControlSocket/permission denied for cp/ssh. 
+
+```
+[ssh_connection]
+ssh_args =
+```
 
 
 ## Run locally

@@ -1,0 +1,9 @@
+---
+    -   hosts: devops
+        become: yes
+        become_method: sudo
+        remote_user: admin
+        roles:
+            -   10-first-minutes
+        vars_files:
+            -   aws_keys.yml
