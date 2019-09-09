@@ -1,6 +1,6 @@
 ---
     region: us-east-1
-    keypair: work-laptop
+    keypair: aws
     image: ami-0f5c5066b40f2414e
     instances:
       - instance_type: t2.micro
