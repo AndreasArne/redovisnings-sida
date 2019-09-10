@@ -2,7 +2,7 @@
     -   hosts: devops
         become: yes
         become_method: sudo
-        remote_user: admin
+        remote_user: "{{ default_user }}"
         roles:
             -   10-first-minutes
         vars_files:

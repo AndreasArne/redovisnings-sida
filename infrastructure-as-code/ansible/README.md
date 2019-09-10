@@ -44,7 +44,7 @@ To be able to run commands locally using venv, the following is needed.
 ansible_python_interpreter = ../../.venv/bin/python
 ```
 
-Problems with ssh and ControlSocket/permission denied for cp/ssh. 
+Problems with ssh and ControlSocket/permission denied for cp/ssh, https://stackoverflow.com/a/41698903.
 
 ```
 [ssh_connection]
