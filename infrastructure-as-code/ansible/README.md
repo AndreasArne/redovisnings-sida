@@ -11,7 +11,8 @@ cat <<EOF
 EOF
 ```
 
-
+## Dynamic inventory for AWS
+https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html#inventory-script-example-aws-ec2
 
 ## AWS credentials
 
