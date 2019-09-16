@@ -5,5 +5,3 @@
         remote_user: "{{ default_user }}"
         roles:
             -   10-first-minutes
-        vars_files:
-            -   aws_keys.yml
