@@ -1,0 +1,8 @@
+---
+    -   hosts: appServer
+        remote_user: "{{ server_user }}"
+        vars_files:
+            -    aws_keys.yml
+        roles:
+            -   deploy_app
+            -   security_groups

@@ -1,0 +1,8 @@
+[program:redovisa]
+command=/home/deploy/app/venv/bin/gunicorn -b {{ groups.appServer[0] }}:8000 -w 4 me_page:app
+directory=/home/deploy/app
+user=deploy
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
