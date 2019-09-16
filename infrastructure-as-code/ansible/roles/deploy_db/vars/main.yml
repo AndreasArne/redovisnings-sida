@@ -1,0 +1,4 @@
+apt_packages:
+    -   mysql-server
+    -   mysql-client
+mysql_force_installation: False
