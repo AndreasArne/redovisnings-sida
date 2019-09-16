@@ -67,3 +67,23 @@ In the playbook:
     connection: local # Keep ansible from open ssh connection
     gather_facts: False
 ```
+
+
+## Encoding Error
+
+```
+File "/c/Users/aar/git/redovisnings-sida/.venv/lib/python3.5/site-packages/boto/rds2/layer1.py", line 3779, in _make_request
+  return json.loads(body)
+File "/usr/lib/python3.5/json/__init__.py", line 312, in loads
+  s.__class__.__name__))
+TypeError: the JSON object must be str, not 'bytes'
+
+.......
+
+File \"/c/Users/aar/git/redovisnings-sida/.venv/lib/python3.5/site-packages/boto/rds2/layer1.py\", line 1522, in describe_db_instances\n    path='/', params=params)\n  File \"/c/Users/aar/git/redovisnings-sida/.venv/lib/python3.5/site-packages/boto/rds2/layer1.py\", line 3779, in _make_request\n    return json.loads(body)\n  File \"/usr/lib/python3.5/json/__init__.py\", line 312, in loads\n    s.__class__.__name__))\nTypeError: the JSON object must be str, not 'bytes'\n",
+    "module_stdout": "",
+    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",
+    "rc": 1
+}
+```
+https://github.com/boto/boto/issues/2677
