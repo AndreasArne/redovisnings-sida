@@ -24,9 +24,9 @@
             to_port: 22
             cidr_ip: 0.0.0.0/0
           - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
+            from_port: 8000
+            to_port: 8000
+            cidr_ip: "{{ groups.loadBalancer[0] + '/32' | default('0.0.0.0/0') }}"
         - name: database
           description: SG for the database node
           port_rules:
