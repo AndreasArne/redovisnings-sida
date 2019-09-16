@@ -3,17 +3,33 @@
 -   name: Change root password
     user: name=root password="{{ root_password }}"
 
+-   name: Update upgrade apt
+    apt:
+        update_cache: "True"
+        cache_valid_time: 3600
+        upgrade: "True"
+
+-   name: Install required packages
+    apt:
+        state: present
+        pkg: "{{ apt_packages }}"
+
+-   name: Adjust APT update intervals
+    copy: 
+        src: files/apt_periodic
+        dest: /etc/apt/apt.conf.d/10periodic
+
 -   name: Create user # https://serversforhackers.com/c/create-user-in-ansible
     user:
-        name: "{{ user }}"
-        password: "{{ user_password }}"
+        name: "{{ server_user }}"
+        password: "{{ server_user_password }}"
         state: present
         shell: /bin/bash
-        groups: "{{user_groups }}"
+        groups: "{{ server_user_groups }}"
 
 -   name: Set ssh authorized key taken from file
     authorized_key:
-        user: "{{ user }}"
+        user: "{{ server_user }}"
         state: present
         key: "{{ lookup('file', item) }}"
     with_items: "{{ pub_ssh_key_location }}"
@@ -36,38 +52,23 @@
     notify: 
         - restart ssh
 
--   name: Only allow user to ssh
-    lineinfile:
-        dest: /etc/ssh/sshd_config
-        regexp: "^AllowUsers" 
-        line: "AllowUsers {{ user }}"
-
 -   name: Add deploy user to sudoers
     lineinfile: 
         dest: /etc/sudoers
-        regexp: "{{ user }} ALL"
-        line: "{{ user }} ALL=(ALL) ALL"
+        regexp: "{{ server_user }} ALL"
+        line: "{{ server_user }} ALL=(ALL) NOPASSWD:ALL"
         state: present
+        
+-   name: Only allow user to ssh
+    remote_user: "{{ server_user }}"
+    lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^AllowUsers" 
+        line: "AllowUsers {{ server_user }}"
 
--   name: Update upgrade apt
-    apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        upgrade: yes
-
--   name: Install required packages
-    apt:
-        state: installed
-        pkg: "{{ apt_packages }}"
-
--   name: Adjust APT update intervals
-    copy: 
-        src: files/apt_periodic
-        dest: /etc/apt/apt.conf.d/10periodic
-
--   name: Remove admin user
-    user:
-        name: "{{ default_user }}"
-        state: absent
-        force: yes
-        remove: yes
+# -   name: Remove admin user
+#     user:
+#         name: "{{ default_user }}"
+#         state: absent
+#         force: yes
+#         remove: yes
