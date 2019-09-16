@@ -19,3 +19,11 @@
           - "load-balancer"
         security_group: load-balancer
         count: 1
+      - instance_type: t2.micro
+        instance_tags:
+          project: "devops"
+          name: "database"
+        instance_ids:
+          - "database"
+        security_group: database
+        count: 1
