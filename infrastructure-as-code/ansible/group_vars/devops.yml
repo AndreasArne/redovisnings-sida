@@ -1,12 +1,9 @@
 ---
 default_user: "admin"
 root_password: "$6$x.yiGDA57.$.V5yNBOFbAJ9vKJhFhaozAEC62G1a/NIlqgd0SVtYBsow/P0oIQ6gUsyhyvImk..H5PTcoOHbjW7TNp.oOU6O1"
-user: "deploy"
-user_password: "$6$A.n0n6Vs0NWqF$HuwgSU.AOwzP15r8Amj9R5ztmVnoRymtC2HwYBuh0iAo3GqqzYLTJVvdSRndYrRbRjiTIjLeMnJX4ouZGZKJQ1"
-user_groups:
-    -   sudo
 pub_ssh_key_location: 
     -   "/mnt/c/Users/aar/.ssh/aws.pub"
+
 apt_packages:
     -   fail2ban
     -   unattended-upgrades
