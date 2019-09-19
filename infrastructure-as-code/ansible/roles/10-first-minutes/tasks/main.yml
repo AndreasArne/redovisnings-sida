@@ -52,6 +52,8 @@
     notify: 
         - restart ssh
 
+-   meta: flush_handlers
+
 -   name: Add deploy user to sudoers
     lineinfile: 
         dest: /etc/sudoers
@@ -60,15 +62,17 @@
         state: present
         
 -   name: Only allow user to ssh
-    remote_user: "{{ server_user }}"
     lineinfile:
         dest: /etc/ssh/sshd_config
         regexp: "^AllowUsers" 
         line: "AllowUsers {{ server_user }}"
+    ignore_errors: yes
 
-# -   name: Remove admin user
-#     user:
-#         name: "{{ default_user }}"
-#         state: absent
-#         force: yes
-#         remove: yes
+-   name: Remove admin user
+    remote_user: "{{ server_user }}"
+    user:
+        name: "{{ default_user }}"
+        state: absent
+        force: yes
+        remove: yes
+    ignore_errors: yes
