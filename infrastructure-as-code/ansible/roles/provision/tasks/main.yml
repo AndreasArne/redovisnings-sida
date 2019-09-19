@@ -1,4 +1,7 @@
 ---
+    
+- debug: msg="{{ec2_facts}}"
+
 -   name: Launch the new EC2 Instance
     ec2:
         aws_access_key: "{{ aws_access_key }}"
@@ -8,27 +11,24 @@
         instance_type: "{{ item.instance_type }}"
         instance_tags: "{{ item.instance_tags }}"
         image: "{{ image }}"
-        wait: true
+        wait: yes
         region: "{{ region }}"
         keypair: "{{ keypair }}"
-        exact_count: "{{item.count}}"
-        count_tag: "{{ item.instance_tags }}"
-        # state: present
+        count: 1
+        # exact_count: "{{item.count}}"
+        # count_tag: "{{ item.instance_tags }}"
+        state: present
         # instance_ids: "{{ item.instance_ids }}"
     loop: "{{ instances }}"
     register: ec2
-# - debug: var=inventory_dir
 
--   name: add created instance to hosts file
-    add_host:
-        name: "{{ item.tagged_instances.0.public_ip }}"
-        groups: "{{ item.tagged_instances.0.tags.name }}"
-        # inventory_dir: '{{ inventory_dir }}'
-    with_items: "{{ ec2.results }}"
+# - debug: msg="{{ec2.results}}"
+# - debug: msg="{{ec2.results[0].instances[0].public_ip}}"
+# - debug: var="{{ec2.results[0].instances[0].tags.name}}"
 
 -   name: Wait for SSH to come up
     wait_for:
-        host: "{{ item.tagged_instances.0.public_ip}}"
+        host: "{{ item.instances.0.public_ip}}"
         port: 22
         state: started
     with_items: "{{ ec2.results}}"
