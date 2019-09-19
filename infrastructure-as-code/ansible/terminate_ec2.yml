@@ -21,3 +21,6 @@
         aws_secret_key: "{{ aws_secret_key }}"
         security_token: "{{ aws_session_token }}"
       with_items: "{{ ec2_facts.instances }}"
+
+    - name: Refresh hosts/inventory to remove old EC2 isntance
+      meta: refresh_inventory
