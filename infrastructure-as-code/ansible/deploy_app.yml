@@ -5,4 +5,3 @@
             -    aws_keys.yml
         roles:
             -   deploy_app
-            -   security_groups
