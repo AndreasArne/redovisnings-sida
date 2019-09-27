@@ -11,7 +11,6 @@
   roles:
       - gather_aws_instances
   tasks:
-
     - name: Terminate EC2 Instance(s)
       ec2:
         instance_ids: '{{ item.instance_id }}'
@@ -21,6 +20,7 @@
         aws_secret_key: "{{ aws_secret_key }}"
         security_token: "{{ aws_session_token }}"
       with_items: "{{ ec2_facts.instances }}"
+        when: item.tags.project == "devops"
       register: terminated_instances
 
     - name: disassociate an elastic IP with a device
