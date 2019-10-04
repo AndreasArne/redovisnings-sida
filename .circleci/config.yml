@@ -20,9 +20,8 @@ jobs:
                     make install-test
 
     test:
-        machine:
-            enabled: true
-
+        docker:
+            - image: circleci/python:3.5
         working_directory: ~/repo
         steps:
             # Step 1: run linter and tests
