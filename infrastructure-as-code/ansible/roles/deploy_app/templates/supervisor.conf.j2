@@ -1,5 +1,5 @@
 [program:redovisa]
-command=/home/deploy/app/venv/bin/gunicorn -b 0.0.0.0:8000 -w 4 me_page:app
+command=/home/deploy/app/venv/bin/gunicorn -b 0.0.0.0:8000 -w 4 --access-logfile /var/log/redovisa/gunicorn-access.log --error-logfile /var/log/redovisa/gunicorn-error.log me_page:app
 directory=/home/deploy/app
 user=deploy
 autostart=true

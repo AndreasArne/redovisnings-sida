@@ -86,6 +86,15 @@
         . venv/bin/activate && \
         flask db upgrade"
 
+- name: Create a gunicorn log dir
+  become: yes
+  become_method: sudo
+  file:
+    path: /var/log/redovisa
+    state: directory
+    mode: '0755'
+    owner: "{{ server_user }}"
+
 -   name: Copy supervisor.conf
     become: yes
     become_method: sudo
