@@ -25,3 +25,5 @@ docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
 
 
 Good blog about docker: https://vsupalov.com/database-in-docker/
+
+composer docu: https://docs.docker.com/compose/compose-file/

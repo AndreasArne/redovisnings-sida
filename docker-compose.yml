@@ -1,0 +1,46 @@
+version: '3'
+services:
+    dbserver:
+        image: mysql/mysql-server:5.7
+        environment:
+            - MYSQL_RANDOM_ROOT_PASSWORD=yes
+            - MYSQL_USER=microblog
+            - MYSQL_DATABASE=microblog
+            - MYSQL_PASSWORD="${DB_PASS:-database-password}"
+        restart:
+            "unless-stopped"
+        networks:
+            microblog:
+    dev:
+        build: 
+            context: .
+            dockerfile: docker/Dockerfile_dev
+        container_name: microblog_dev
+        ports:
+            - "8000:5000"
+        restart:
+            "unless-stopped"
+        environment:
+            - SECRET_KEY=development
+            - DATABASE_URL=mysql+pymysql://microblog:database-password@dbserver/microblog
+        networks:
+            microblog:
+    prod:
+        build: 
+            context: .
+            dockerfile: docker/Dockerfile_prod
+        container_name: microblog
+        ports:
+            - "8000:5000"
+        restart:
+            "unless-stopped"
+        # env_file:
+        #     - ./.env
+        networks:
+            microblog:
+networks:
+    microblog:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.28.0.0/16
