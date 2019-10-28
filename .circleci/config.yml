@@ -1,11 +1,10 @@
 version: 2
 jobs:
-    build:
+    test:
         docker:
             - image: circleci/python:3.5
         working_directory: ~/repo
         steps:
-            # Step 1: obtain repo from GitHub
             - checkout
             # step 2: Print environemnt info
             - run:
@@ -18,13 +17,6 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     make install-test
-
-    test:
-        docker:
-            - image: circleci/python:3.5
-        working_directory: ~/repo
-        steps:
-            # Step 1: run linter and tests
             - run:
                 name: run tests
                 command: |
@@ -35,7 +27,4 @@ workflows:
     version: 2
     build-and-test:
         jobs:
-            - build
-            - test:
-                requires:
-                    - build
+            - test
