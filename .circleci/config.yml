@@ -23,18 +23,18 @@ jobs:
                     . venv/bin/activate
                     make validate exec-tests
 
-    build:
-        environment:
-            IMAGE_NAME: andreasarne/redovisnings-sida
-        docker:
-            image: circleci/python:3.5
-        working_directory: ~/repo
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run
-                name: Build docker image
-                command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
+    # build:
+    #     environment:
+    #         IMAGE_NAME: andreasarne/redovisnings-sida
+    #     docker:
+    #         image: circleci/python:3.5
+    #     working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         - setup_remote_docker
+    #         - run
+    #             name: Build docker image
+    #             command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
 
     
 workflows:
