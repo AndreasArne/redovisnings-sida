@@ -27,7 +27,7 @@ jobs:
         environment:
             IMAGE_NAME: andreasarne/redovisnings-sida
         docker:
-            image: circleci/python:3.5
+            - image: circleci/python:3.5
         working_directory: ~/repo
         steps:
             - checkout
