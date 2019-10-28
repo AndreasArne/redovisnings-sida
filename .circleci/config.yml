@@ -32,7 +32,7 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
-            - run
+            - run:
                 name: Build docker image
                 command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
 
