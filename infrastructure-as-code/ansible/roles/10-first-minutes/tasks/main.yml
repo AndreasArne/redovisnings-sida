@@ -1,77 +1,85 @@
-# https://ryaneschinger.com/blog/securing-a-server-with-ansible/
 ---
--   name: Change root password
-    user: name=root password="{{ root_password }}"
+-   name: Set root password
+    user:
+        name: root
+        password: "{{ root_password }}"
 
--   name: Update upgrade apt
+-   name: Update apt-cache and upgrade
     apt:
+        force_apt_get: yes
         update_cache: "True"
         cache_valid_time: 3600
-        upgrade: "True"
+        upgrade: yes
 
--   name: Install required packages
+-   name: Install packages
     apt:
-        state: present
-        pkg: "{{ apt_packages }}"
+        force_apt_get: yes
+        name: "{{ packages }}"
 
--   name: Adjust APT update intervals
-    copy: 
+-   name: Copy unattended upgrades 10 settings
+    copy:
         src: files/apt_periodic
         dest: /etc/apt/apt.conf.d/10periodic
 
--   name: Create user # https://serversforhackers.com/c/create-user-in-ansible
+-   name: Copy unattended upgrades 50 settings
+    copy:
+        src: files/apt_periodic_50
+        dest: /etc/apt/apt.conf.d/50unattended-upgrades
+
+-   name: Create user
     user:
         name: "{{ server_user }}"
-        password: "{{ server_user_password }}"
+        password: "{{ server_user_pass }}"
         state: present
         shell: /bin/bash
         groups: "{{ server_user_groups }}"
 
--   name: Set ssh authorized key taken from file
+-   name: Add ssh-key for new user
     authorized_key:
         user: "{{ server_user }}"
         state: present
         key: "{{ lookup('file', item) }}"
     with_items: "{{ pub_ssh_key_location }}"
 
--   name: Disallow password authentication
-    lineinfile: 
-        dest: /etc/ssh/sshd_config
+-   name: Disallow root ssh access
+    lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        state: present
+    notify:
+        - restart ssh
+
+-   name: Disallow root ssh access
+    lineinfile:
+        path: /etc/ssh/sshd_config
         regexp: "^PasswordAuthentication"
         line: "PasswordAuthentication no"
         state: present
     notify:
         - restart ssh
 
--   name: Disallow root SSH access
-    lineinfile: 
-        dest: /etc/ssh/sshd_config
-        regexp: "^PermitRootLogin"
-        line: "PermitRootLogin no"
-        state: present
-    notify: 
-        - restart ssh
-
 -   meta: flush_handlers
 
--   name: Add deploy user to sudoers
-    lineinfile: 
+-   name: Add user to sudoers
+    lineinfile:
         dest: /etc/sudoers
         regexp: "{{ server_user }} ALL"
         line: "{{ server_user }} ALL=(ALL) NOPASSWD:ALL"
         state: present
-        
+
 -   name: Only allow user to ssh
     lineinfile:
-        dest: /etc/ssh/sshd_config
-        regexp: "^AllowUsers" 
+        path: /etc/ssh/sshd_config
+        regexp: "^AllowUsers"
         line: "AllowUsers {{ server_user }}"
-    ignore_errors: yes
+        state: present
+   ignore_errors: yes
 
--   name: Remove admin user
+-   name: Remove default user
     remote_user: "{{ server_user }}"
     user:
-        name: "{{ default_user }}"
+        name: admin
         state: absent
         force: yes
         remove: yes

@@ -1,7 +1,0 @@
----
-    -   hosts: devops
-        become: yes
-        become_method: sudo
-        remote_user: "{{ default_user }}"
-        roles:
-            -   10-first-minutes
