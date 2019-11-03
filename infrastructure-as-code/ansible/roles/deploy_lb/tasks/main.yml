@@ -28,6 +28,7 @@
         state: absent
         path: /etc/nginx/sites-enabled/default
 
+# Gist for configs https://gist.github.com/AndreasArne/58374253123a31bb7c32e2b551fe8492
 -   name: Template nginx config to server
     template:
         src: nginx.conf.j2
