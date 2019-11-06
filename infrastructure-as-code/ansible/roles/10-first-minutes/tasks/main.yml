@@ -74,7 +74,7 @@
         regexp: "^AllowUsers"
         line: "AllowUsers {{ server_user }}"
         state: present
-   ignore_errors: yes
+    ignore_errors: yes
 
 -   name: Remove default user
     remote_user: "{{ server_user }}"
