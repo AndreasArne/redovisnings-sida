@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+output {
+  # Something went wrong with the grok parsing, don't discard the messages though
+  if "_grokparsefailure" not in [tags] {
+    if "beats_input" not in [tags] {
+      elasticsearch {
+        hosts => ["{{ ELK_ELASTICSEARCH_SERVICE_NAME }}:9200"]
+        index => "%{type}"
+      }
+    } else {
+      elasticsearch {
+        hosts => ["{{ ELK_ELASTICSEARCH_SERVICE_NAME }}:9200"]
+        index => "beats-%{[service][type]}"
+      }
+    }
+  }
+}

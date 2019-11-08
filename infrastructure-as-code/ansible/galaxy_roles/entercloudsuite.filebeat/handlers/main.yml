@@ -1,0 +1,11 @@
+---
+- name: reload filebeat
+  service:
+    state: "{{ filebeat_state }}"
+    name: filebeat
+    daemon_reload: yes
+
+- name: restart filebeat
+  service:
+    name: filebeat
+    state: "{{ filebeat_state }}"

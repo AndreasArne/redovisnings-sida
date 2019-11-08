@@ -1,0 +1,30 @@
+---
+- name: Create Dockerfiles directories
+  file:
+    path: "{{ ELK_ROOT_LOCATION }}/dockerfiles/{{ item }}"
+    mode: 0755
+    owner: root
+    recurse: true
+    state: directory
+  with_items: "{{ ELK_SERVICES }}"
+
+- name: Create ELK dockerfiles
+  template:
+    src: "Dockerfile.j2"
+    dest: "{{ ELK_ROOT_LOCATION }}/dockerfiles/{{ item }}/Dockerfile"
+    mode: 0755
+    owner: root
+  vars:
+    SERVICE: "{{ item }}"
+  register: overrided_dockerfile
+  with_items: "{{ ELK_SERVICES }}"
+
+- name: Build ELK images
+  docker_image:
+    build:
+      path: "{{ ELK_ROOT_LOCATION }}/dockerfiles/{{ item }}"
+      pull: false
+    name: "{{ item }}"
+    tag: latest
+    source: build
+  with_items: "{{ ELK_SERVICES }}"

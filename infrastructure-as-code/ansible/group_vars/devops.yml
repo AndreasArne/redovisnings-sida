@@ -2,7 +2,7 @@
 default_user: "admin"
 root_password: "$6$x.yiGDA57.$.V5yNBOFbAJ9vKJhFhaozAEC62G1a/NIlqgd0SVtYBsow/P0oIQ6gUsyhyvImk..H5PTcoOHbjW7TNp.oOU6O1"
 pub_ssh_key_location: 
-    -   "/mnt/c/Users/aar/.ssh/aws.pub"
+    -   "~/.ssh/aws.pub"
 
 apt_packages:
     -   fail2ban

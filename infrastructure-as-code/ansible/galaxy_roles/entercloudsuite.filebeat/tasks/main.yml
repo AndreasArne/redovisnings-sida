@@ -1,0 +1,64 @@
+---
+# tasks file for mediapeers.filebeat
+
+- name: Debian - Install apt-transport-https to support https APT downloads
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add elastic apt repo key (for all elastic software)
+  apt_key:
+    url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+# Install filebeat as a logstash client (to deliver logs), just for demoing
+- name: Remove old repo "{{ remove_repo }}"
+  apt_repository:
+    repo: "{{ remove_repo }}"
+    update_cache: yes
+    state: absent
+  when: remove_repo is defined
+
+- name: Add filebeat apt 7.x repo
+  apt_repository:
+    repo: "{{ add_repo }}"
+    update_cache: yes
+    state: present
+
+- name: Install filebeat apt package
+  package:
+    name: "{{ filebeat_pakage }}"
+    update_cache: yes
+
+- name: Configure filebeat to read from logfiles and deliver to logstash
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+
+- name: edit filebeat systemd unit file
+  ini_file:
+    dest: /lib/systemd/system/filebeat.service
+    section: Service
+    option: LimitNOFILE
+    value: 64000
+  notify:
+    - reload filebeat
+
+- name: Enable filebeat on bootup and ensure it's started
+  command: filebeat modules enable  "{{ item }}"
+  args:
+    creates: "/etc/filebeat/modules.d/{{ item }}.yml"
+  with_items: "{{ filebeat_enable_modules }}"
+  notify: restart filebeat
+  tags:
+    - skip_ansible_lint
+
+- name: Enable filebeat service
+  service:
+    name: filebeat
+    enabled: "{{ filebeat_enabled }}"
+
+- name: Start filebeat searvice
+  service:
+    name: filebeat
+    state: "{{ filebeat_state }}"

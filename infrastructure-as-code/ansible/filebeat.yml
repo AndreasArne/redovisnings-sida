@@ -1,0 +1,17 @@
+- name: My nice play
+  hosts: loadBalancer
+  become: yes
+  become_method: sudo
+  remote_user: "{{ server_user }}"
+  roles:
+  - role: "entercloudsuite.filebeat"
+    filebeat_conf:
+      output.logstash:
+          hosts: ["http://54.166.91.130:5045"]
+          username: "elastic"
+          password: "changeme"
+    filebeat_enable_modules:
+        - system
+        - nginx
+    filebeat_enabled: started
+    filebeat_state: restarted

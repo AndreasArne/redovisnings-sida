@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+input {
+{% for item in ELK_LOGSTASH_INPUTS %}
+  {{ item.protocol }}{
+    type => "{{ item.type }}"
+    port => {{ item.port }}
+  }
+{% endfor %}
+}

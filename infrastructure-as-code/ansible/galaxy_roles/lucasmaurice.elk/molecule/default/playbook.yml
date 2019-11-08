@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    pip_install_packages:
+      - docker-py
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+    - name: Apply dependancies
+      include_role:
+        name: "{{ item }}"
+      with_items:
+        - geerlingguy.pip
+        - geerlingguy.docker
+
+  roles:
+    - role: elk

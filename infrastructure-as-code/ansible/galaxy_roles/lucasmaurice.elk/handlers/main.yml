@@ -1,0 +1,36 @@
+---
+# - name: restart elasticsearch
+#   systemd:
+#     name: "{{ ELK_ELASTICSEARCH_SERVICE_NAME }}.service"
+#     daemon_reload: true
+#     state: restarted
+#   listen: restart elasticsearch
+
+- name: restart elasticsearch
+  service:
+    name: "{{ ELK_SERVICES_NAMES['elasticsearch'] }}.service"
+    state: restarted
+  tags: molecule-notest
+  listen: restart elasticsearch
+
+- name: restart kibana
+  service:
+    name: "{{ ELK_SERVICES_NAMES['kibana'] }}.service"
+    state: restarted
+  tags: molecule-notest
+  listen: restart kibana
+
+- name: restart logstash
+  service:
+    name: "{{ ELK_SERVICES_NAMES['logstash'] }}.service"
+    state: restarted
+  tags: molecule-notest
+  listen: restart logstash
+
+- name: restart elk
+  service:
+    name: "{{ ELK_SERVICES_NAMES[item] }}.service"
+    state: restarted
+  with_items: "{{ ELK_SERVICES }}"
+  tags: molecule-notest
+  listen: restart elk

@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+# https://github.com/elastic/elasticsearch-docker
+FROM {{ ELK_REGISTRIES[SERVICE] }}:{{ ELK_VERSION }}
+
+# Add your elasticsearch plugins setup here
+{% for PLUGINS in ELK_PLUGINS[SERVICE] %}
+    RUN {{ SERVICE }}-plugin install {{ PLUGINS }}
+{% endfor %}

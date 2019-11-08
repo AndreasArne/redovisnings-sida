@@ -1,0 +1,37 @@
+---
+galaxy_info:
+  role_name: elk
+
+  author: Lucas Maurice
+  description: This is a role for install a dockerized elastic stack.
+  company: Effenco
+
+  license: MIT
+
+  min_ansible_version: 1.8
+
+  github_branch: master
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+
+  galaxy_tags:
+    - docker
+    - elasticsearch
+    - logstash
+    - kibana
+    - elk
+
+  dependencies:
+    - geerlingguy.pip
+    - geerlingguy.docker
