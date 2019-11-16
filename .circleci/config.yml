@@ -62,14 +62,10 @@ jobs:
                 key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             
-            - run: echo $ANSIBLE_VAULT_PASS > infrastructure-as-code/ansible/.vault-pass.txt
-            - run: cd infrastructure-as-code/ansible/ && ansible-vault encrypt .vault-pass.txt --vault-password-file="print-vault-pass.py"
-            - run: cd infrastructure-as-code/ansible/ && ansible-vault decrypt .vault-pass.txt --vault-password-file="print-vault-pass.py" && cat .vault-pass.txt
-            
-            - run: cd infrastructure-as-code/ansible/ && ansible-vault decrypt test.yml --vault-password-file="print-vault-pass.py" && cat test.yml
+            # - run: echo $ANSIBLE_VAULT_PASS > infrastructure-as-code/ansible/.vault-pass.txt
             # - run: cat  infrastructure-as-code/ansible/.vault-pass.txt
             # - run: cd infrastructure-as-code/ansible/ && python3 print-vault-pass.py
-            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml -vvvv --vault-password-file=".vault-pass.txt"
+            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml
 
 workflows:
     version: 2
