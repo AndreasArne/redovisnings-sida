@@ -1,5 +1,5 @@
 ---
--   hosts: devops
+-   hosts: loadBalancer
     remote_user: admin
     become: yes
     become_method: sudo
