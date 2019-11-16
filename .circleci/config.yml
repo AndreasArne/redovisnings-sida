@@ -44,9 +44,22 @@ jobs:
         working_directory: ~/repo
         steps:
             - checkout
-            - run: python3 -m venv venv && echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-            - run: ls
-            - run: pip3 install -r requirements/deploy.txt
+            - restore_cache:
+                keys:
+                  - v1-dependencies-{{ checksum "requirements/deploy.txt" }}
+                  # fallback to using the latest cache if no exact match is found
+                  - v1-dependencies-
+
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    pip3 install -r requirements/deploy.txt
+            - save_cache:
+                paths:
+                  - ./venv
+                key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
+            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run: echo $ANSIBLE_VAULT_PASS > infrastructure-as-code/ansible/.vault-pass.txt
             # - run: chmod 777 .vault-pass.txt
             - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml --vault-password-file=.vault-pass.txt
