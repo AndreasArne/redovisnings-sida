@@ -65,7 +65,7 @@ jobs:
             # - run: echo $ANSIBLE_VAULT_PASS > infrastructure-as-code/ansible/.vault-pass.txt
             # - run: cat  infrastructure-as-code/ansible/.vault-pass.txt
             # - run: cd infrastructure-as-code/ansible/ && python3 print-vault-pass.py
-            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml 10-first-minutes.yml
+            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml deploy_lb.yml
 
 workflows:
     version: 2

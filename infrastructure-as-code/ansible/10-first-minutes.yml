@@ -1,5 +1,5 @@
 ---
--   hosts: loadBalancer
+-   hosts: elk
     remote_user: admin
     become: yes
     become_method: sudo
