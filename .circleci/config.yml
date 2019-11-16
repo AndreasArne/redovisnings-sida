@@ -47,7 +47,8 @@ jobs:
             - run: python3 -m venv venv && echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - run: ls
             - run: pip3 install -r requirements/deploy.txt
-            - run: echo $ANSIBLE_VAULT_PASS > .vault-pass.txt
+            - run: echo $ANSIBLE_VAULT_PASS > infrastructure-as-code/ansible/.vault-pass.txt
+            # - run: chmod 777 .vault-pass.txt
             - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml --vault-password-file=.vault-pass.txt
                 
 
