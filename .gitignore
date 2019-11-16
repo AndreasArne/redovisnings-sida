@@ -1,7 +1,7 @@
 .env
 app.db
 aws_keys.yml
-hosts
+# hosts
 logs/
 
 # Byte-compiled / optimized / DLL files
