@@ -1,47 +1,61 @@
 version: 2
 jobs:
-    test:
-        docker:
-            - image: circleci/python:3.5
-        # working_directory: ~/repo
-        steps:
-            - checkout
-            # step 2: Print environemnt info
-            - run:
-                name: Print info
-                command: make info
-            # Step 3: create virtual env and install dependencies
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    make install-test
-            - run:
-                name: run tests
-                command: |
-                    . venv/bin/activate
-                    make validate exec-tests
+    # test:
+    #     docker:
+    #         - image: circleci/python:3.5
+    #     # working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         # step 2: Print environemnt info
+    #         - run:
+    #             name: Print info
+    #             command: make info
+    #         # Step 3: create virtual env and install dependencies
+    #         - run:
+    #             name: install dependencies
+    #             command: |
+    #                 python3 -m venv venv
+    #                 . venv/bin/activate
+    #                 make install-test
+    #         - run:
+    #             name: run tests
+    #             command: |
+    #                 . venv/bin/activate
+    #                 make validate exec-tests
+    # 
+    # build:
+    #     environment:
+    #         IMAGE_NAME: andreasarne/redovisnings-sida
+    #     docker:
+    #         - image: circleci/python:3.5
+    #     working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         - setup_remote_docker
+    #         - run:
+    #             name: Build docker image
+    #             command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
 
-    build:
+    deploy:
         environment:
-            IMAGE_NAME: andreasarne/redovisnings-sida
+            - ANSIBLE_HOST_KEY_CHECKING: False
         docker:
             - image: circleci/python:3.5
         working_directory: ~/repo
         steps:
             - checkout
-            - setup_remote_docker
-            - run:
-                name: Build docker image
-                command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
+            - run: python3 -m venv venv && echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+            - run: pip3 install requirementes/deploy.txt
+            - run: echo $ANSIBLE_VAULT_PASS > .vault-pass.txt
+            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml --vault-password-file=./ansible/.vault-pass.txt
+                
 
-    
 workflows:
     version: 2
     build-and-test:
         jobs:
-            - test
-            - build:
-                requires:
-                    - test
+            # - test
+            # - build:
+            #     requires:
+            #         - test
+            - deploy
