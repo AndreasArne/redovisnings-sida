@@ -73,6 +73,14 @@ help:
 
 
 
+# target: add-ssh                         - Add ssh key to agent
+.PHONY: add-ssh
+add-ssh: 
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/aws
+
+
+
 # target: info                         - Displays versions.
 .PHONY: info
 info:
