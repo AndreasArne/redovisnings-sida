@@ -1,0 +1,16 @@
+---
+server_user: "deploy"
+server_user_pass: "$6$A.n0n6Vs0NWqF$HuwgSU.AOwzP15r8Amj9R5ztmVnoRymtC2HwYBuh0iAo3GqqzYLTJVvdSRndYrRbRjiTIjLeMnJX4ouZGZKJQ1"
+server_user_groups:
+    -   sudo
+
+db_root_password: "secret_root"
+db_user: "app"
+db_user_password: "secret_app"
+db_name: "appDB"
+ansible_python_interpreter: "python3"
+
+admin_email: andreas_a@outlook.com
+
+domain_name: arnesson.dev
+
