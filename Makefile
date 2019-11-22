@@ -97,6 +97,13 @@ validate:
 
 
 
+# target: bandit                     - Run SAST with Bandit
+.PHONY: bandit
+bandit:
+	@bandit -c .bandit.yml -r app
+
+
+
 # target: test-integration             - Run tests in tests/integration with coverage.py
 .PHONY: test-integration
 test-integration: clean
