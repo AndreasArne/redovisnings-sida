@@ -104,6 +104,13 @@ bandit:
 
 
 
+# target: zap                     - Run DAST with Zap
+.PHONY: zap
+zap:
+	@docker run -t owasp/zap2docker-stable zap-baseline.py -t https://arnesson.dev
+
+
+
 # target: test-integration             - Run tests in tests/integration with coverage.py
 .PHONY: test-integration
 test-integration: clean
