@@ -23,18 +23,5 @@
       when: item.tags.project == "devops"
       register: terminated_instances
 
-    - name: disassociate an elastic IP with a device
-      ec2_eip:
-          # device_id: "{{ item.item.instance_id }}"
-          ip: "{{ item.item.public_ip_address }}"
-          state: absent
-          region: "{{  region  }}"
-          aws_access_key: "{{ aws_access_key }}"
-          aws_secret_key: "{{ aws_secret_key }}"
-          security_token: "{{ aws_session_token }}"
-      with_items:
-          "{{terminated_instances.results}}"
-      when: item.item.tags.name == "loadBalancer" and item.changed
-
     - name: Refresh hosts/inventory to remove old EC2 isntance
       meta: refresh_inventory
