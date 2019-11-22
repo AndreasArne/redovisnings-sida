@@ -1,5 +1,5 @@
 ---
--   hosts: elk
+-   hosts: devops
     remote_user: admin
     become: yes
     become_method: sudo

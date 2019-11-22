@@ -2,7 +2,7 @@
 # docker.yml
 
 - name: Example
-  hosts: loadBalancer
+  hosts: appServer
   remote_user: "{{ server_user }}"
   become: true
   become_method: sudo

@@ -1,7 +1,10 @@
 ---
     -   hosts: appServer
         remote_user: "{{ server_user }}"
+        become: yes
+        become_method: sudo
         vars_files:
             -    aws_keys.yml
         roles:
+            -   setup_docker
             -   deploy_app

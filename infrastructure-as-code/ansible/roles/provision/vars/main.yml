@@ -27,11 +27,11 @@
           - "database"
         security_group: database
         count: 1
-      - instance_type: t2.small
-        instance_tags:
-          project: "devops"
-          name: "elk"
-        instance_ids:
-          - "elk"
-        security_group: elk
-        count: 1
+      # - instance_type: t2.small
+      #   instance_tags:
+      #     project: "devops"
+      #     name: "elk"
+      #   instance_ids:
+      #     - "elk"
+      #   security_group: elk
+      #   count: 1
