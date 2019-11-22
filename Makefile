@@ -191,7 +191,4 @@ install-dev:
 # target: install-test                 - Install all Python packages specified in requirements/{test.txt, prod.txt}
 .PHONY: install-test
 install-test:
-	${pip} install -r requirements/dev.txt
-
-
-
+	${pip} install -r requirements/test.txt
