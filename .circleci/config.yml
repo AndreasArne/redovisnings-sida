@@ -24,10 +24,11 @@ jobs:
             #     command: |
             #         . venv/bin/activate
             #         make validate exec-tests
-            # - run: |
-                # pip3 install --user -r requirements.txt
-            - snyk/scan:
-                target-file: requirements.txt
+            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+            # pip3 install --user -r requirements.txt
+            - run: |
+                make install
+            - snyk/scan
     
     build:
         environment:
