@@ -30,7 +30,7 @@ jobs:
                 make install
             - snyk/scan
 
-    dependencies:
+    snyk:
         docker:
             - image: circleci/python:3.5
         working_directory: ~/repo
@@ -91,11 +91,11 @@ jobs:
 
 
 workflows:
-    version: 2
+    version: 2.1
     build-and-test:
         jobs:
             # - test
-            - dependencies
+            - snyk
             # - build
             #     requires:
             #         - test
