@@ -28,7 +28,7 @@ jobs:
                 pip3 install --user -r requirements.txt
             - snyk/scan
     
-    # build:
+    build:
         environment:
             IMAGE_NAME: andreasarne/redovisnings-sida
         docker:
@@ -78,7 +78,7 @@ workflows:
     build-and-test:
         jobs:
             - test
-            # - build:
+            - build:
             #     requires:
             #         - test
             # - deploy
