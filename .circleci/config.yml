@@ -9,26 +9,21 @@ jobs:
         steps:
             - checkout
             # step 2: Print environemnt info
-            # - run:
-            #     name: Print info
-            #     command: make info
-            # # Step 3: create virtual env and install dependencies
+            - run:
+                name: Print info
+                command: make info
+            # Step 3: create virtual env and install dependencies
             - run:
                 name: install dependencies
                 command: |
                     python3 -m venv venv
                     . venv/bin/activate
-            #         make install-test
-            # - run:
-            #     name: run tests
-            #     command: |
-            #         . venv/bin/activate
-            #         make validate exec-tests
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-            # pip3 install --user -r requirements.txt
-            - run: |
-                make install
-            - snyk/scan
+                    make install-test
+            - run:
+                name: run tests
+                command: |
+                    . venv/bin/activate
+                    make validate exec-tests bandit
 
     snyk:
         docker:
@@ -44,7 +39,7 @@ jobs:
                     make install
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - snyk/scan
-            
+
     build:
         environment:
             IMAGE_NAME: andreasarne/redovisnings-sida
@@ -94,9 +89,9 @@ workflows:
     version: 2.1
     build-and-test:
         jobs:
-            # - test
+            - test
             - snyk
-            # - build
+            - build
             #     requires:
             #         - test
             # - deploy
