@@ -2,31 +2,31 @@ version: 2.1
 orbs: 
     snyk: snyk/snyk@0.0.8
 jobs:
-    test:
-        docker:
-            - image: circleci/python:3.5
-        # working_directory: ~/repo
-        steps:
-            - checkout
-            # step 2: Print environemnt info
-            # - run:
-            #     name: Print info
-            #     command: make info
-            # # Step 3: create virtual env and install dependencies
-            # - run:
-            #     name: install dependencies
-            #     command: |
-            #         python3 -m venv venv
-            #         . venv/bin/activate
-            #         make install-test
-            # - run:
-            #     name: run tests
-            #     command: |
-            #         . venv/bin/activate
-            #         make validate exec-tests
-            - run: |
-                pip3 install --user -r requirements.txt
-            - snyk/scan
+    # test:
+        # docker:
+        #     - image: circleci/python:3.5
+        # # working_directory: ~/repo
+        # steps:
+        #     - checkout
+        #     # step 2: Print environemnt info
+        #     # - run:
+        #     #     name: Print info
+        #     #     command: make info
+        #     # # Step 3: create virtual env and install dependencies
+        #     # - run:
+        #     #     name: install dependencies
+        #     #     command: |
+        #     #         python3 -m venv venv
+        #     #         . venv/bin/activate
+        #     #         make install-test
+        #     # - run:
+        #     #     name: run tests
+        #     #     command: |
+        #     #         . venv/bin/activate
+        #     #         make validate exec-tests
+        #     - run: |
+        #         pip3 install --user -r requirements.txt
+        #     - snyk/scan
     
     build:
         environment:
@@ -43,42 +43,42 @@ jobs:
             - snyk/scan:
                 docker-image-name: $IMAGE_NAME
 
-    deploy:
-        environment:
-            - ANSIBLE_HOST_KEY_CHECKING: False
-        docker:
-            - image: circleci/python:3.5
-        working_directory: ~/repo
-        steps:
-            - checkout
-            - restore_cache:
-                keys:
-                  - v1-dependencies-{{ checksum "requirements/deploy.txt" }}
-                  # fallback to using the latest cache if no exact match is found
-                  - v1-dependencies-
-
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip3 install -r requirements/deploy.txt
-            - save_cache:
-                paths:
-                  - ./venv
-                key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-            
-            - run: echo "$ANSIBLE_VAULT_PASS" > infrastructure-as-code/ansible/.vault_pass.txt
-            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml --vault-password-file .vault_pass.txt
+    # deploy:
+    #     environment:
+    #         - ANSIBLE_HOST_KEY_CHECKING: False
+    #     docker:
+    #         - image: circleci/python:3.5
+    #     working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         - restore_cache:
+    #             keys:
+    #               - v1-dependencies-{{ checksum "requirements/deploy.txt" }}
+    #               # fallback to using the latest cache if no exact match is found
+    #               - v1-dependencies-
+    # 
+    #         - run:
+    #             name: install dependencies
+    #             command: |
+    #                 python3 -m venv venv
+    #                 . venv/bin/activate
+    #                 pip3 install -r requirements/deploy.txt
+    #         - save_cache:
+    #             paths:
+    #               - ./venv
+    #             key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
+    #         - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+    # 
+    #         - run: echo "$ANSIBLE_VAULT_PASS" > infrastructure-as-code/ansible/.vault_pass.txt
+    #         - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml --vault-password-file .vault_pass.txt
 
 
 workflows:
     version: 2
     build-and-test:
         jobs:
-            - test
-            - build:
+            # - test
+            - build
             #     requires:
             #         - test
             # - deploy
