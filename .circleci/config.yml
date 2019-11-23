@@ -9,23 +9,23 @@ jobs:
         steps:
             - checkout
             # step 2: Print environemnt info
-            - run:
-                name: Print info
-                command: make info
-            # Step 3: create virtual env and install dependencies
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    make install-test
-            - run:
-                name: run tests
-                command: |
-                    . venv/bin/activate
-                    make validate exec-tests
+            # - run:
+            #     name: Print info
+            #     command: make info
+            # # Step 3: create virtual env and install dependencies
+            # - run:
+            #     name: install dependencies
+            #     command: |
+            #         python3 -m venv venv
+            #         . venv/bin/activate
+            #         make install-test
+            # - run:
+            #     name: run tests
+            #     command: |
+            #         . venv/bin/activate
+            #         make validate exec-tests
             - run: |
-                make install
+                pip3 install --user -r requirements.txt
             - snyk/scan
     
     # build:
