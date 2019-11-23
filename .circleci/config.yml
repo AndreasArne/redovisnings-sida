@@ -13,11 +13,11 @@ jobs:
             #     name: Print info
             #     command: make info
             # # Step 3: create virtual env and install dependencies
-            # - run:
-            #     name: install dependencies
-            #     command: |
-            #         python3 -m venv venv
-            #         . venv/bin/activate
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
             #         make install-test
             # - run:
             #     name: run tests
