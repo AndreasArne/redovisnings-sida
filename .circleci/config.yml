@@ -25,7 +25,6 @@ jobs:
                     . venv/bin/activate
                     make validate exec-tests
             - run: |
-                . venv/bin/activate
                 make install
             - snyk/scan
     
