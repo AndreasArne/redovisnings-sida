@@ -24,6 +24,7 @@ jobs:
                 command: |
                     . venv/bin/activate
                     make validate exec-tests
+
             - snyk/scan
     
     # build:
