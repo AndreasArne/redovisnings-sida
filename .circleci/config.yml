@@ -1,28 +1,31 @@
-version: 2
+version: 2.1
+orbs: 
+    snyk: snyk@0.0.8
 jobs:
-    # test:
-    #     docker:
-    #         - image: circleci/python:3.5
-    #     # working_directory: ~/repo
-    #     steps:
-    #         - checkout
-    #         # step 2: Print environemnt info
-    #         - run:
-    #             name: Print info
-    #             command: make info
-    #         # Step 3: create virtual env and install dependencies
-    #         - run:
-    #             name: install dependencies
-    #             command: |
-    #                 python3 -m venv venv
-    #                 . venv/bin/activate
-    #                 make install-test
-    #         - run:
-    #             name: run tests
-    #             command: |
-    #                 . venv/bin/activate
-    #                 make validate exec-tests
-    # 
+    test:
+        docker:
+            - image: circleci/python:3.5
+        # working_directory: ~/repo
+        steps:
+            - checkout
+            # step 2: Print environemnt info
+            - run:
+                name: Print info
+                command: make info
+            # Step 3: create virtual env and install dependencies
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    make install-test
+            - run:
+                name: run tests
+                command: |
+                    . venv/bin/activate
+                    make validate exec-tests
+            - snyk/scan
+    
     # build:
     #     environment:
     #         IMAGE_NAME: andreasarne/redovisnings-sida
