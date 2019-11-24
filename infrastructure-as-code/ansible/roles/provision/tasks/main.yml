@@ -32,10 +32,7 @@
     when: item.item.instance_tags.name == "loadBalancer"
 
 
--   name: SHit debug
-    debug:
-        msg: "{{lb_ip}}"
-# 
+
 -   name: Set domain to ip in AWS (route53)
     route53:
         aws_access_key: "{{ aws_access_key }}"
@@ -51,6 +48,7 @@
     with_items:
         -   "{{ domain_name}}"
         -   "www.{{ domain_name}}"
+
 
 
 -   name: Wait for SSH to come up

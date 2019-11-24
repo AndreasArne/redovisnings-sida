@@ -27,11 +27,11 @@
           - "database"
         security_group: database
         count: 1
-      - instance_type: t2.small
-        instance_tags:
-          project: "devops"
-          name: "monitor"
-        instance_ids:
-          - "monitor"
-        security_group: monitor
-        count: 1
+      # - instance_type: t2.small
+      #   instance_tags:
+      #     project: "devops"
+      #     name: "monitor"
+      #   instance_ids:
+      #     - "monitor"
+      #   security_group: monitor
+      #   count: 1

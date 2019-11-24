@@ -1,16 +1,8 @@
-apt_packages:
-    -   python3.5
-    -   python3-venv
-    -   python3-dev
-    -   supervisor
-    -   nginx
-    -   git
-    -   python-certbot-nginx
+---
 
-app_file: me_page.py
-
-flask_env_vars:
-    -   regexp: "^SECRET_KEY"
-        line: "SECRET_KEY={{ secret_key.stdout }}"
-    -   regexp: "^DATABASE_URL"
-        line: "DATABASE_URL=mysql+pymysql://{{ db_user }}:{{ db_user_password }}@{{ groups.database[0] }}:3306/{{ db_name }}"
+container_name: microblog
+image_name: andreasarne/microblog:latest
+policy: always
+host_port: 8000
+container_port: 5000
+database_url: mysql+pymysql://{{ db_user }}:{{ db_user_password }}@{{ groups['database'][0] }}:3306/{{ db_name }}

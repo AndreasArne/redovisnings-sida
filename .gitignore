@@ -1,6 +1,6 @@
 .env
 app.db
-aws_keys.yml
+# aws_keys.yml
 # hosts
 logs/
 

@@ -76,7 +76,7 @@ help:
 # target: add-ssh                         - Add ssh key to agent
 .PHONY: add-ssh
 add-ssh: 
-	eval "$(ssh-agent -s)"
+	eval `ssh-agent -s`
 	ssh-add ~/.ssh/aws
 
 
@@ -94,6 +94,20 @@ info:
 .PHONY: validate
 validate:
 	@pylint --rcfile=.pylintrc app tests
+
+
+
+# target: bandit                     - Run SAST with Bandit
+.PHONY: bandit
+bandit:
+	@bandit -c .bandit.yml -r app
+
+
+
+# target: zap                     - Run DAST with Zap
+.PHONY: zap
+zap:
+	@docker run -t owasp/zap2docker-stable zap-baseline.py -t https://arnesson.dev
 
 
 
@@ -191,7 +205,4 @@ install-dev:
 # target: install-test                 - Install all Python packages specified in requirements/{test.txt, prod.txt}
 .PHONY: install-test
 install-test:
-	${pip} install -r requirements/dev.txt
-
-
-
+	${pip} install -r requirements/test.txt
