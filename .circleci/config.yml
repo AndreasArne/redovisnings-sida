@@ -2,11 +2,11 @@ version: 2.1
 orbs: 
     snyk: snyk/snyk@0.0.8
 executors:
-    docker-publisher:
-        environment:
-            IMAGE_NAME: andreasarne/microblog
+  docker-publisher:
+    environment:
+      IMAGE_NAME: andreasarne/microblog
     docker:
-        - image: circleci/buildpack-deps:stretch
+      - image: circleci/buildpack-deps:stretch
 jobs:
     test:
         docker:
