@@ -5,6 +5,8 @@ executors:
     docker-publisher:
         environment:
             IMAGE_NAME: andreasarne/microblog
+    docker:
+        - image: circleci/buildpack-deps:stretch
 jobs:
     test:
         docker:
