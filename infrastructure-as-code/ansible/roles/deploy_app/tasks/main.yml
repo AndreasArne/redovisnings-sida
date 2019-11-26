@@ -5,6 +5,7 @@
         image: "{{ image_name }}"
         ports:
           - "{{ host_port }}:{{ container_port }}"
+          - "9125:9125"
         restart_policy: "{{ policy }}"
         env:
           DATABASE_URL: "{{ database_url }}"

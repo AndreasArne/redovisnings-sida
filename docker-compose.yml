@@ -9,8 +9,8 @@ services:
             - MYSQL_PASSWORD="${DB_PASS:-database-password}"
         restart:
             "unless-stopped"
-        networks:
-            microblog:
+        # networks:
+            # microblog:
     dev:
         build: 
             context: .
@@ -32,12 +32,13 @@ services:
         container_name: microblog
         ports:
             - "8000:5000"
+            - "9125:9125"
         restart:
             "unless-stopped"
         # env_file:
         #     - ./.env
-        networks:
-            microblog:
+        # networks:
+            # host:
 networks:
     microblog:
         ipam:
