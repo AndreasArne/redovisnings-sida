@@ -38,30 +38,30 @@
             from_port: 3306
             to_port: 3306
             cidr_ip: 0.0.0.0/0
-        - name: elk
-          description: SG for the elk-stack
-          port_rules:
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 5000
-            to_port: 5000
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 9600
-            to_port: 9600
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 5601
-            to_port: 5601
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 9300
-            to_port: 9300
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 9200
-            to_port: 9200
-            cidr_ip: 0.0.0.0/0
+        # - name: elk
+        #   description: SG for the elk-stack
+        #   port_rules:
+        #   - proto: tcp
+        #     from_port: 22
+        #     to_port: 22
+        #     cidr_ip: 0.0.0.0/0
+        #   - proto: tcp
+        #     from_port: 5000
+        #     to_port: 5000
+        #     cidr_ip: 0.0.0.0/0
+        #   - proto: tcp
+        #     from_port: 9600
+        #     to_port: 9600
+        #     cidr_ip: 0.0.0.0/0
+        #   - proto: tcp
+        #     from_port: 5601
+        #     to_port: 5601
+        #     cidr_ip: 0.0.0.0/0
+        #   - proto: tcp
+        #     from_port: 9300
+        #     to_port: 9300
+        #     cidr_ip: 0.0.0.0/0
+        #   - proto: tcp
+        #     from_port: 9200
+        #     to_port: 9200
+        #     cidr_ip: 0.0.0.0/0
