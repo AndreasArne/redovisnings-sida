@@ -65,20 +65,20 @@ jobs:
                   root: .
                   paths:
                       - ./image.tar
-        publish-latest:
-            executor: docker-publisher
-            steps:
-              - attach_workspace:
-                  at: /tmp/workspace
-              - setup_remote_docker
-              - run:
-                  name: Load archived Docker image
-                  command: docker load -i /tmp/workspace/image.tar
-              - run:
-                  name: Publish Docker Image to Docker Hub
-                  command: |
-                    echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-                    docker push $IMAGE_NAME:latest
+    publish-latest:
+        executor: docker-publisher
+        steps:
+          - attach_workspace:
+              at: /tmp/workspace
+          - setup_remote_docker
+          - run:
+              name: Load archived Docker image
+              command: docker load -i /tmp/workspace/image.tar
+          - run:
+              name: Publish Docker Image to Docker Hub
+              command: |
+                echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+                docker push $IMAGE_NAME:latest
 
     deploy:
         environment:
