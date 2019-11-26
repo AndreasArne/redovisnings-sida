@@ -1,6 +1,10 @@
 version: 2.1
 orbs: 
     snyk: snyk/snyk@0.0.8
+executors:
+    docker-publisher:
+        environment:
+            IMAGE_NAME: andreasarne/microblog
 jobs:
     test:
         docker:
@@ -42,9 +46,6 @@ jobs:
 
     build:
         executor: docker-publisher
-        environment:
-            IMAGE_NAME: andreasarne/microblog
-        working_directory: ~/repo
         steps:
             - checkout
             - setup_remote_docker
