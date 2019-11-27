@@ -49,6 +49,8 @@ jobs:
 
     build:
         executor: anchore/anchore_engine
+        environment:
+          IMAGE_NAME: andreasarne/microblog
         working_directory: ~/repo
         steps:
             - checkout
