@@ -48,8 +48,6 @@ jobs:
             - snyk/scan
 
     build:
-        environment:
-            IMAGE_NAME: andreasarne/redovisnings-sida
         executor: anchore/anchore_engine
         working_directory: ~/repo
         steps:
