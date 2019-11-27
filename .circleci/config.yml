@@ -59,14 +59,14 @@ jobs:
                 name: Build docker image
                 command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
             - anchore/analyze_local_image:
-                  dockerfile_path: docker/Dockerfile_prod
-                  image_name: $IMAGE_NAME
-                  policy_bundle_file_path: .circleci/.anchore/policy_bundle.json
-                  policy_failure: true
-                  timeout: '500'
-              - anchore/parse_reports
-              - store_artifacts:
-                  path: anchore-reports
+                dockerfile_path: docker/Dockerfile_prod
+                image_name: $IMAGE_NAME
+                policy_bundle_file_path: .circleci/.anchore/policy_bundle.json
+                policy_failure: true
+                timeout: '500'
+            - anchore/parse_reports
+            - store_artifacts:
+                path: anchore-reports
             - snyk/scan:
                 docker-image-name: $IMAGE_NAME
             - run:
