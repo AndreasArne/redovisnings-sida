@@ -6,5 +6,5 @@
         vars_files:
             -    aws_keys.yml
         roles:
-            # -   setup_docker
+            -   setup_docker
             -   deploy_app

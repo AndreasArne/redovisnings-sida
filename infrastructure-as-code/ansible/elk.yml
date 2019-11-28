@@ -1,7 +1,0 @@
-- name: Setup ELK stack
-  hosts: elk
-  become: yes
-  become_method: sudo
-  remote_user: "{{ server_user }}"
-  roles:
-    - lucasmaurice.elk

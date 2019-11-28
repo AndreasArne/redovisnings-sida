@@ -1,0 +1,19 @@
+---
+# -   name: Template nginx config to server
+#     template:
+#         src: prometheus.yml.j2
+#         dest: /tmp/prometheus.yml
+#         force: yes
+
+
+-   name: Pull prom/statsd-exporter
+    command: docker pull quay.io/prometheus/node-exporter
+
+
+-   name: Run prom container
+    command: docker run -d
+        --net="host"
+        --pid="host"
+        -v "/:/host:ro,rslave"
+        quay.io/prometheus/node-exporter
+        --path.rootfs=/host

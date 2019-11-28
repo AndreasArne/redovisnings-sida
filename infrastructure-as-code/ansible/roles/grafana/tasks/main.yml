@@ -1,0 +1,26 @@
+---
+-   name: Template nginx config to server
+    template:
+        src: grafana.ini.j2
+        dest: /tmp/grafana.ini
+        force: yes
+
+
+
+-   name: Pull prom/statsd-exporter
+    command: docker pull grafana/grafana
+
+
+
+-   name: "Launch docker container with microblog application"
+    docker_container:
+        name: "grafana"
+        image: "grafana/grafana"
+        restart_policy: "always"
+        volumes:
+            - "/tmp/grafana.ini:/etc/grafana/grafana.ini"
+            - "/tmp/dashboards:/var/lib/grafana/dashboards"
+        network_mode: host
+        env:
+            GF_SECURITY_ADMIN_PASSWORD: admin
+        recreate: yes

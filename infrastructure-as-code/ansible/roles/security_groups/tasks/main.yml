@@ -2,6 +2,9 @@
 - name: Create security group
   ec2_group:
     name: "{{ group.name }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    security_token: "{{ aws_session_token }}"
     description: The Webserver security group
     region: "{{ region }}"
     rules: "{{ group.port_rules }}"

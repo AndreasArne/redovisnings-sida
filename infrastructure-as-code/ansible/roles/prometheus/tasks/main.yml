@@ -1,0 +1,23 @@
+---
+-   name: Template nginx config to server
+    template:
+        src: prometheus.yml.j2
+        dest: /tmp/prometheus.yml
+        force: yes
+
+
+
+-   name: Pull prom/statsd-exporter
+    command: docker pull prom/prometheus
+
+
+
+-   name: "Launch docker container with microblog application"
+    docker_container:
+        name: "prom"
+        image: "prom/prometheus"
+        restart_policy: "always"
+        volumes:
+            - "/tmp/prometheus.yml:/etc/prometheus/prometheus.yml"
+        network_mode: host
+        recreate: yes

@@ -1,2 +1,2 @@
 ---
-# dependencies: [security_groups]
+dependencies: [security_groups]
