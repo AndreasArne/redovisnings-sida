@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microblog
+  labels:
+    app: microblog
+spec:
+  selector:
+    app: microblog
+    tier: frontend
+  # type: LoadBalancer
+  ports:
+    - port: 5000
+      protocol: TCP
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: microblog
+  labels:
+    app: microblog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: microblog
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: microblog
+        tier: frontend
+    spec:
+      containers:
+      - image: andreasarne/microblog:no-statsd
+        name: microblog
+        env:
+        # - name: DATABASE_URL
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mysql-secrets
+        #       key: DATABASE_URL
+        - name: DATABASE_URL
+          value: mysql+pymysql://microblog:my-super-secret-microblog-password@mysql:3306/microblog
+        ports:
+        - containerPort: 5000
+          name: microblog
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
