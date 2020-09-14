@@ -1,28 +1,13 @@
+Scripts for configuring a server for the app
+======================
 
-First 10 minutes on a server, as scripts
-==========================================
+### Scripts
 
-Does pretty much everything as https://dbwebb.se/kunskap/github-education-pack-och-en-server-pa-digital-ocean#first10, so we don't need to do it manually.
-
-Note! The scripts assume that you have added your ssh key to AWS and created the server with it. They are copied from the original user to the `deploy` user.
-
+Before running any script open it and look for `<...>` at the beginning of the file. You need to replace them with some data. Example, replace `<password>` with what you want your password to be. Don't add password and push to git though!
 
 
-## Usage
+**10-first-minutes** Contain [Första 10 minuter på en server](kunskap/github-education-pack-och-en-server-pa-digital-ocean#first10) as scripts. Use these if you need to create the server again and don't want to install everything manually.
 
-1. Copy this folder to your server with:
-    - `scp -i <path-to-keyfile> -r 10-first-minutes azureuser@<ip>:`
+**deploy-app** Contain scripts to deploy the app and install its dependencies. Running these should give you a working server with the app running.
 
-3. Login to the server:
-    - `ssh -i <path-to-keyfile> admin@<ip>`
-
-4. Change to root user with:
-    - `sudo su`.
-
-5. Enter the copied folder, edit variables in the scripts and execute the scripts in order.
-
-6. Logout from the server and login again the `deploy` user. Then delete the `admin` user, `sudo userdel -r admin`.
-
-7.  Profit!
-
-Not you are ready to use your server!
+**Read README.md** file in the seperate folders for more instructions on how to use the scripts.

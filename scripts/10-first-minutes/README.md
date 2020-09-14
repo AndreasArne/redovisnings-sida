@@ -11,17 +11,17 @@ Note! The scripts assume that you have added your ssh key to AWS and created the
 ## Usage
 
 1. Copy this folder to your server with:
-    - `scp -i <path-to-keyfile> -r 10-first-minutes azureuser@<ip>:`
+    - `rsync -avzr -e "ssh -i <path-to-private-keyfile>" 10-first-minutes azureuser@<ip>:`
 
 3. Login to the server:
-    - `ssh -i <path-to-keyfile> admin@<ip>`
+    - `ssh -i <path-to-private-keyfile> azureuser@<ip>`
 
 4. Change to root user with:
     - `sudo su`.
 
 5. Enter the copied folder, edit variables in the scripts and execute the scripts in order.
 
-6. Logout from the server and login again the `deploy` user. Then delete the `admin` user, `sudo userdel -r admin`.
+6. Logout from the server and login again the `deploy` user. Then delete the `azureuser` user, `sudo userdel -r azureuser`.
 
 7.  Profit!
 

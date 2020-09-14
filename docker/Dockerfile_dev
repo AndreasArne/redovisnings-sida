@@ -12,10 +12,10 @@ RUN venv/bin/pip install gunicorn pymysql
 
 COPY app app
 COPY migrations migrations
-COPY me_page.py boot.sh ./
+COPY microblog.py boot.sh ./
 RUN chmod +x boot.sh
 
-ENV FLASK_APP me_page.py
+ENV FLASK_APP microblog.py
 
 RUN chown -R deploy:deploy ./
 USER deploy
