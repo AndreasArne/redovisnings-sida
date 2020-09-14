@@ -21,11 +21,13 @@ ssh deploy@$ip
 mv redovisnings-sida microblog
 cd microblog
 rm -rf venv
-sh scripts/deploy-app/1.dependencies.sh
-sh scripts/deploy-app/2.microblog.sh
-sh scripts/deploy-app/3.db.sh
-sh scripts/deploy-app/4.supervisor.sh
-sudo sh scripts/deploy-app/5.nginx.sh
+# sh scripts/deploy-app/1.dependencies.sh
+# sh scripts/deploy-app/2.microblog.sh
+# sh scripts/deploy-app/3.db.sh
+# sh scripts/deploy-app/4.supervisor.sh
+# sudo sh scripts/deploy-app/5.nginx.sh
 
 sudo sh scripts/docker/1.install.sh
 sudo sh scripts/docker/2.compose.sh
+
+sudo docker-compose up prod
