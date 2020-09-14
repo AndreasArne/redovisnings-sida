@@ -1,17 +1,21 @@
 
-Driftsätta en Flask app, som skript
+Deploy app on a server
 ====================================
 
-1. Logga in på server som `deploy``.
+The `resources` contains config files used by the scripts. Do not change the `<...>` tags in them! The scripts does that.
 
-2. Klona git repot och ställ dig i root mappen för repot.
 
-3. Kör skript 1-4.
 
-4. Peka om ditt domän namn till din server.
+## Usage
 
-(För AWS kan du behöva uppdatera instansens security group att tillåta TCP/UPD trafik och behöver en Elastic IP)
+1. Login to your server as `deploy` user.
 
-5. Kör skript 5 med sudo. Det krävs lite manuell input för https.
+2. Clone the git repository and `cd` to the folder.
+
+3. Run script 1-4, from them repo root folder.
+
+4. Make sure that your domain name is pointed at the server and that the security group/firewall allows https and https traffic.
+
+5. PS! Run script 5 with `sudo` and give input when asked for.
 
 6. Profit!!
