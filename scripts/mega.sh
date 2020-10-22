@@ -1,7 +1,7 @@
 #!/bin/bash
 ip="52.169.116.101"
 
-rsync -avzr -e "ssh -i ~/.ssh/id_rsa" 10-first-minutes azureuser@$ip:
+scp -i ~/.ssh/id_rsa 10-first-minutes azureuser@$ip:
 ssh azureuser@$ip
 sudo su
 cd 10-first-minutes/
@@ -15,7 +15,7 @@ ssh deploy@$ip
 sudo userdel -r azureuser
 exit
 
-rsync -avrz ../../redovisnings-sida deploy@52.169.116.101:
+rsync -avrz --exclude ".git" --exclude ".venv" --exclude ".venv" ../../redovisnings-sida deploy@$ip1:
 ssh deploy@$ip
 # git clone https://github.com/AndreasArne/redovisnings-sida.git
 mv redovisnings-sida microblog
