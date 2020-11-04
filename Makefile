@@ -73,7 +73,7 @@ help:
 
 
 
-# target: add-ssh                         - Add ssh key to agent
+# target: add-ssh                      - Add ssh key to agent
 .PHONY: add-ssh
 add-ssh: 
 	eval `ssh-agent -s`
@@ -97,14 +97,22 @@ validate:
 
 
 
-# target: bandit                     - Run SAST with Bandit
+# target: validate-docker                     - Validate Dockerfile with hadolint
+.PHONY: validate-docker
+validate-docker:
+	docker run --rm -i hadolint/hadolint < docker/Dockerfile_prod
+
+
+
+
+# target: bandit                       - Run SAST with Bandit
 .PHONY: bandit
 bandit:
 	@bandit -c .bandit.yml -r app
 
 
 
-# target: zap                     - Run DAST with Zap
+# target: zap                          - Run DAST with Zap
 .PHONY: zap
 zap:
 	@docker run -t owasp/zap2docker-stable zap-baseline.py -t https://arnesson.dev
@@ -149,7 +157,7 @@ exec-tests: test-unit test-integration
 
 # target: test                         - Run tests and display code coverage
 .PHONY: test
-test: validate exec-tests
+test: validate exec-tests validate-docker
 	${py} -m coverage report  --rcfile=.coveragerc
 	$(MAKE) clean-cov
 
