@@ -5,8 +5,8 @@ Also Custom class for logging, RequestFormatter.
 
 import os
 from logging import Formatter
-from flask import request
 from dotenv import load_dotenv
+from flask import request
 
 
 basedir = os.path.abspath(os.path.dirname(__file__) +  "/..")

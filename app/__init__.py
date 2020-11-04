@@ -62,4 +62,4 @@ def create_app(config_class=ProdConfig):
     return app
 
 
-from app import models #pylint: disable=wrong-import-position, cyclic-import
+from app import models #pylint: disable=wrong-import-position, cyclic-import, import-outside-toplevel
