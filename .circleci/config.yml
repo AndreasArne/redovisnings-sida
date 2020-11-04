@@ -29,8 +29,8 @@ jobs:
                 name: run tests
                 command: |
                     . venv/bin/activate
-                    make validate exec-tests bandit
-
+                    make validate exec-tests validate-docker bandit
+                    
     snyk:
         docker:
             - image: circleci/python:3.5
