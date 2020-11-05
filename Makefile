@@ -97,6 +97,13 @@ validate:
 
 
 
+# target: validate-ci                  - Validate CircleCi config with CircleCi CLI
+.PHONY: validate-ci
+validate-ci:
+	@circleci config validate
+
+
+
 # target: validate-docker                     - Validate Dockerfile with hadolint
 .PHONY: validate-docker
 validate-docker:
