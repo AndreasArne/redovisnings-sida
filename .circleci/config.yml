@@ -29,7 +29,7 @@ jobs:
                 name: run tests
                 command: |
                     . venv/bin/activate
-                    make validate exec-tests validate-docker bandit
+                    make validate exec-tests bandit
                     
     snyk:
         docker:
@@ -86,7 +86,7 @@ jobs:
         environment:
             - ANSIBLE_HOST_KEY_CHECKING: False
         docker:
-            - image: circleci/python:3.5
+            - image: circleci/python:3.6
         working_directory: ~/repo
         steps:
             - checkout
@@ -108,8 +108,8 @@ jobs:
                 key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
             - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
     
-            - run: echo "$ANSIBLE_VAULT_PASS" > infrastructure-as-code/ansible/.vault_pass.txt
-            - run: cd infrastructure-as-code/ansible/ && ansible-playbook gather_aws_instances.yml deploy_app.yml --vault-password-file .vault_pass.txt
+            - run: echo "$ANSIBLE_VAULT_PASS" > ansible/.vault_pass.txt
+            - run: cd ansible/ && ansible-playbook gather_az_instances.yml --vault-password-file .vault_pass.txt
 
 
 workflows:

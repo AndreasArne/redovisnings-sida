@@ -5,4 +5,4 @@ image_name: andreasarne/microblog:latest
 policy: always
 host_port: 8000
 container_port: 5000
-database_url: mysql+pymysql://{{ db_user }}:{{ db_user_password }}@{{ groups['database'][0] }}:3306/{{ db_name }}
+database_url: mysql+pymysql://microblog:pass@{{ groups['database'][0] }}:3306/microblog

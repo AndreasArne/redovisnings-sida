@@ -6,13 +6,30 @@ server_user_groups:
 
 db_root_password: "secret_root"
 db_user: "app"
-db_user_password: "secret_app"
+db_user_password: "pass"
 db_name: "appDB"
 ansible_python_interpreter: "python3"
 
 admin_email: andreas_a@outlook.com
 
-domain_name: arnesson.dev
-
 docker_username: "andreasarne"
 docker_password: "D3tta4rDocker93"
+
+
+
+region: northeurope
+resource_group: BTH-kmom01-aar-e20886 # Change me
+domain_name: arnesson.dev # Change me
+
+root_user: azureuser
+
+vmtags:
+    StudentId: "aar" # Change me
+
+
+local_ssh_location: '/home/zeldah/.ssh/azure.pub' # Change me
+
+### behövs
+
+root_password: "$6$x.yiGDA57.$.V5yNBOFbAJ9vKJhFhaozAEC62G1a/NIlqgd0SVtYBsow/P0oIQ6gUsyhyvImk..H5PTcoOHbjW7TNp.oOU6O1"
+

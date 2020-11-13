@@ -1,7 +1,0 @@
----
--   name: restart mysql
-    become: yes
-    become_method: sudo
-    service:
-        name: mysqld
-        state: restarted

@@ -39,7 +39,7 @@
         user: "{{ server_user }}"
         state: present
         key: "{{ lookup('file', item) }}"
-    with_items: "{{ pub_ssh_key_location }}"
+    with_items: "{{ local_ssh_location }}"
 
 -   name: Disallow root ssh access
     lineinfile:
@@ -79,7 +79,7 @@
 -   name: Remove default user
     remote_user: "{{ server_user }}"
     user:
-        name: admin
+        name: azureuser
         state: absent
         force: yes
         remove: yes

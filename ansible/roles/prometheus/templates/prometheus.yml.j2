@@ -8,4 +8,4 @@ scrape_configs:
         instance: prometheus
   - job_name: 'helloworld_gunicorn'
     static_configs:
-      - targets: ['{{ groups['appServer'][0] }}:9102']
+      - targets: ['{{ groups['appserver'][0] }}:9102']

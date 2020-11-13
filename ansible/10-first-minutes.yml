@@ -1,6 +1,9 @@
 ---
--   hosts: devops
-    remote_user: admin
+-   hosts:
+        -   database
+        -   appserver
+        -   loadbalancer
+    remote_user: azureuser
     become: yes
     become_method: sudo
     roles:

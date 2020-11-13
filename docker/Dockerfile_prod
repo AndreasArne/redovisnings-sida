@@ -1,7 +1,7 @@
 FROM python:3.6-alpine
 
 # Uncomment to show validation error
-RUN cd /tmp && echo "hello!"
+# RUN cd /tmp && echo "hello!"
 
 RUN adduser -D deploy
 

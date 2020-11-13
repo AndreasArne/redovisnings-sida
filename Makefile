@@ -77,7 +77,7 @@ help:
 .PHONY: add-ssh
 add-ssh: 
 	eval `ssh-agent -s`
-	ssh-add ~/.ssh/aws
+	ssh-add ~/.ssh/azure
 
 
 
@@ -222,3 +222,12 @@ install-dev:
 .PHONY: install-test
 install-test:
 	${pip} install -r requirements/test.txt
+
+
+
+# target: install-deploy                 - Install all Python packages specified in requirements/{deploy.txt}
+.PHONY: install-deploy
+install-deploy:
+	${pip} install -r requirements/deploy.txt
+	@${pip} install ansible[azure]
+
