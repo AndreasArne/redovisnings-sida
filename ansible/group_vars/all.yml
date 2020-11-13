@@ -27,7 +27,7 @@ vmtags:
     StudentId: "aar" # Change me
 
 
-local_ssh_location: '/home/zeldah/.ssh/azure.pub' # Change me
+local_ssh_location: '/home/zeldah/.ssh/azureci.pub' # Change me
 
 ### behövs
 

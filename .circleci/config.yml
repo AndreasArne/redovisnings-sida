@@ -99,14 +99,14 @@ jobs:
             - run:
                 name: install dependencies
                 command: |
-                    python3 -m venv venv
+                    python3 -m venv .venv
                     . venv/bin/activate
                     pip3 install -r requirements/deploy.txt
             - save_cache:
                 paths:
                   - ./venv
                 key: v1-dependencies-{{ checksum "requirements/deploy.txt" }}
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+            - run: echo "source ~/repo/.venv/bin/activate" >> $BASH_ENV
     
             - run: echo "$ANSIBLE_VAULT_PASS" > ansible/.vault_pass.txt
             - run: cd ansible/ && ansible-playbook gather_az_instances.yml --vault-password-file .vault_pass.txt
