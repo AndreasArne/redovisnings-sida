@@ -8,79 +8,79 @@ executors:
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
-    test:
-        docker:
-            - image: circleci/python:3.5
-        working_directory: ~/repo
-        steps:
-            - checkout
-            # step 2: Print environemnt info
-            - run:
-                name: Print info
-                command: make info
-            # Step 3: create virtual env and install dependencies
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    make install-test
-            - run:
-                name: run tests
-                command: |
-                    . venv/bin/activate
-                    make validate exec-tests bandit
+    # test:
+    #     docker:
+    #         - image: circleci/python:3.5
+    #     working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         # step 2: Print environemnt info
+    #         - run:
+    #             name: Print info
+    #             command: make info
+    #         # Step 3: create virtual env and install dependencies
+    #         - run:
+    #             name: install dependencies
+    #             command: |
+    #                 python3 -m venv venv
+    #                 . venv/bin/activate
+    #                 make install-test
+    #         - run:
+    #             name: run tests
+    #             command: |
+    #                 . venv/bin/activate
+    #                 make validate exec-tests bandit
                     
-    snyk:
-        docker:
-            - image: circleci/python:3.5
-        working_directory: ~/repo
-        steps:
-            - checkout
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    make install
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
-            - snyk/scan
+    # snyk:
+    #     docker:
+    #         - image: circleci/python:3.5
+    #     working_directory: ~/repo
+    #     steps:
+    #         - checkout
+    #         - run:
+    #             name: install dependencies
+    #             command: |
+    #                 python3 -m venv venv
+    #                 . venv/bin/activate
+    #                 make install
+    #         - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+    #         - snyk/scan
 
-    build:
-        executor: docker-publisher
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:  
-                name: Build docker image
-                command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
-            - snyk/scan:
-                docker-image-name: $IMAGE_NAME
-            - run:
-                name: Tag build with latest
-                command: docker tag $IMAGE_NAME:latest $IMAGE_NAME:latest
-            - run:
-                name: Archive Docker image
-                command: docker save -o image.tar $IMAGE_NAME
-            - persist_to_workspace:
-                root: .
-                paths:
-                    - ./image.tar
+    # build:
+    #     executor: docker-publisher
+    #     steps:
+    #         - checkout
+    #         - setup_remote_docker
+    #         - run:  
+    #             name: Build docker image
+    #             command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
+    #         - snyk/scan:
+    #             docker-image-name: $IMAGE_NAME
+    #         - run:
+    #             name: Tag build with latest
+    #             command: docker tag $IMAGE_NAME:latest $IMAGE_NAME:latest
+    #         - run:
+    #             name: Archive Docker image
+    #             command: docker save -o image.tar $IMAGE_NAME
+    #         - persist_to_workspace:
+    #             root: .
+    #             paths:
+    #                 - ./image.tar
 
-    publish-latest:
-        executor: docker-publisher
-        steps:
-          - attach_workspace:
-              at: /tmp/workspace
-          - setup_remote_docker
-          - run:
-              name: Load archived Docker image
-              command: docker load -i /tmp/workspace/image.tar
-          - run:
-              name: Publish Docker Image to Docker Hub
-              command: |
-                  echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-                  docker push $IMAGE_NAME:latest
+    # publish-latest:
+    #     executor: docker-publisher
+    #     steps:
+    #       - attach_workspace:
+    #           at: /tmp/workspace
+    #       - setup_remote_docker
+    #       - run:
+    #           name: Load archived Docker image
+    #           command: docker load -i /tmp/workspace/image.tar
+    #       - run:
+    #           name: Publish Docker Image to Docker Hub
+    #           command: |
+    #               echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+    #               docker push $IMAGE_NAME:latest
 
     deploy:
         environment:
@@ -100,7 +100,7 @@ jobs:
                 name: install dependencies
                 command: |
                     python3 -m venv .venv
-                    . venv/bin/activate
+                    . .venv/bin/activate
                     pip3 install -r requirements/deploy.txt
             - save_cache:
                 paths:
@@ -116,12 +116,12 @@ workflows:
     version: 2.1
     build-and-test:
         jobs:
-            - test
-            - snyk
-            - build
-            - publish-latest:
-                requires:
-                    - build
+            # - test
+            # - snyk
+            # - build
+            # - publish-latest:
+            #     requires:
+            #         - build
             - deploy:
-                requires:
-                    - publish-latest
+                # requires:
+                #     - publish-latest
