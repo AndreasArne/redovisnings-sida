@@ -27,7 +27,7 @@ jobs:
                 command: |
                     python3 -m venv .venv
                     . .venv/bin/activate
-                    pip3 install -r requirements/deploy.txt
+                    pip3 install -r requirements/deploy.txt ansible[azure]
             - save_cache:
                 paths:
                   - ./.venv
@@ -35,7 +35,7 @@ jobs:
             - run: echo "source ~/repo/.venv/bin/activate" >> $BASH_ENV
     
             - run: echo "$ANSIBLE_VAULT_PASS" > ansible/.vault_pass.txt
-            - run: cd ansible/ && ansible-playbook gather_az_instances.yml --vault-password-file .vault_pass.txt
+            - run: cd ansible/ && ansible-playbook -vvv gather_az_instances.yml --vault-password-file .vault_pass.txt
 
 
 workflows:
