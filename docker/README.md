@@ -56,7 +56,8 @@ unable to execute 'gcc': No such file or directory
 ```
 Install `gcc`:
 ```
-RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
+# hadolint ignore=DL3013,DL3018
+RUN apk --no-cache add --virtual build-dependencies libffi-dev openssl-dev py-pip build-base \
   && pip install --upgrade pip \
   && pip install -r requirements.txt \
   && apk del build-dependencies
