@@ -13,7 +13,8 @@ def test_register_login_login_register_when_logged_in(client, user_dict, registe
     assert b"Congratulations, you are now a registered user!" in register_user_response.data
 
     with client:
-        response = client.post('/login',
+        response = client.post(
+            '/login',
             data=user_dict,
             follow_redirects=True,
         )
@@ -21,14 +22,16 @@ def test_register_login_login_register_when_logged_in(client, user_dict, registe
         assert response.status_code == 200
         assert b"Hi, doe!" in response.data # Check that was redirected to /index
 
-    response = client.post('/login',
+    response = client.post(
+        '/login',
         data=user_dict,
         follow_redirects=True,
     )
     assert response.status_code == 200
     assert b"Hi, doe!" in response.data # Check that was redirected to /index
 
-    response = client.post('/register',
+    response = client.post(
+        '/register',
         data=user_dict,
         follow_redirects=True,
     )
@@ -40,7 +43,8 @@ def test_register_user_wrong_password2(client, user_dict):
     Test registering a user where repeat password is different.
     """
     user_dict["password2"] = "some else"
-    response = client.post('/register',
+    response = client.post(
+        '/register',
         data=user_dict,
         follow_redirects=True,
     )
@@ -52,7 +56,8 @@ def test_register_user_missing_data(client):
     """
     Test registering a user when missing data in form.
     """
-    response = client.post('/register',
+    response = client.post(
+        '/register',
         data={},
         follow_redirects=True,
     )
@@ -65,7 +70,8 @@ def test_login_with_wrong_username_and_password(client, register_user_response, 
     Test logging in with wrong username and password
     """
     with client:
-        response = client.post('/login',
+        response = client.post(
+            '/login',
             data={
                 "username": "not_me",
                 "password": "something"
@@ -78,7 +84,8 @@ def test_login_with_wrong_username_and_password(client, register_user_response, 
         assert b"Invalid username or password" in response.data
 
     with client:
-        response = client.post('/login',
+        response = client.post(
+            '/login',
             data={
                 "username": user_dict["username"],
                 "password": "wrong password"
@@ -94,12 +101,14 @@ def test_logout(client, register_user_response, user_dict):
     """
     Test that logging out user works
     """
-    client.post('/login',
+    client.post(
+        '/login',
         data=user_dict,
         follow_redirects=True,
     )
 
-    response = client.post('/logout',
+    response = client.post(
+        '/logout',
         follow_redirects=True,
     )
     assert response.status_code == 405
