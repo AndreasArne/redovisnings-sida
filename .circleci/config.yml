@@ -43,16 +43,17 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     make install
-            - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+            # - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - snyk/scan:
                 additional-arguments: "--policy-path=.snyk"
+                target-file: ".test-req.txt"
 
     build:
         executor: docker-publisher
         steps:
             - checkout
             - setup_remote_docker
-            - run:  
+            - run:
                 name: Build docker image
                 command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
             - snyk/scan:
