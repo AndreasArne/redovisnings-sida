@@ -1,5 +1,5 @@
 -r prod.txt
-pylint >= 1.4.4
+pylint >= 2.5.0 # hade 1.4.4 tidigare. Snyk varnar att borde ha >= 2.5.0
 pytest >= 4.4.1
 coverage~=4.5.1
-bandit >= 1.6.2
+bandit >= 1.6.2 # snyk varnar för pyyaml som följer med här, men det finns ingen ny version utan felet.
