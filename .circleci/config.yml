@@ -56,7 +56,7 @@ jobs:
                 command: docker build -t $IMAGE_NAME:latest -f docker/Dockerfile_prod .
             - snyk/scan:
                 docker-image-name: $IMAGE_NAME
-                additional-arguments: "policy-path=.snyk"
+                additional-arguments: "--policy-path=.snyk"
             - run:
                 name: Tag build with latest
                 command: docker tag $IMAGE_NAME:latest $IMAGE_NAME:latest
