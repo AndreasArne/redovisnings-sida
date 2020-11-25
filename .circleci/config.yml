@@ -46,7 +46,6 @@ jobs:
             # - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
             - snyk/scan:
                 additional-arguments: "--policy-path=.snyk"
-                target-file: ".test-req.txt"
 
     build:
         executor: docker-publisher
