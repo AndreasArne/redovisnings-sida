@@ -1,5 +1,6 @@
 FROM python:3.6-alpine
 
+RUN apk --no-cache add musl-utils>=1.1.24-r10
 # Uncomment to show validation error
 # RUN cd /tmp && echo "hello!"
 
