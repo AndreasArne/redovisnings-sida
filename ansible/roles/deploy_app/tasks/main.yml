@@ -21,12 +21,12 @@
         name: "{{ container_name }}"
         image: "{{ image_name }}"
         restart_policy: "{{ policy }}"
-        ports:
-          - "{{ host_port }}:{{ container_port }}"
+        # ports:
+          # - "{{ host_port }}:{{ container_port }}"
         env:
           DATABASE_URL: "{{ database_url }}"
-        network_mode: host
         recreate: yes
+        network_mode: host
 
 # -   name: Display details about the goss results
 #     debug:

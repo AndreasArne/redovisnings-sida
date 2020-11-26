@@ -1,8 +1,8 @@
 ---
 instances:
+    - name: loadbalancer
     - name: appserver
     - name: database
-    - name: loadbalancer
 
 relative_names:
     - name: www
