@@ -1,8 +1,15 @@
 ---
 instances:
+<<<<<<< Updated upstream
     - name: loadbalancer
     - name: appserver
     - name: database
+=======
+    # - name: appserver
+    # - name: database
+    - name: loadbalancer
+    - name: monitoring
+>>>>>>> Stashed changes
 
 relative_names:
     - name: www
