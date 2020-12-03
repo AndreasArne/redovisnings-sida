@@ -24,8 +24,8 @@ sudo kubeadm init
 
 # spara för att joina sen
 # kör med sudo
-kubeadm join 173.0.0.4:6443 --token nkg29v.ult91hsldi55wq00 \
-    --discovery-token-ca-cert-hash sha256:06e8799522e4fb35fcfd23a962e37512eae0f0e6ebba63a5e6c5b7730dba017e
+kubeadm join 173.0.0.4:6443 --token omu1w9.t61j1lnmehptlz7k \
+    --discovery-token-ca-cert-hash sha256:de6f5e7dcb1eca2f70b0ee0cfb9a6fb3ce2c331dd86fb97373fa5fcdbd0af230 
 
 # master
 mkdir -p $HOME/.kube

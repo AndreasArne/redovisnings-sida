@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: animals
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: hare.minikube
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hare
+            port:
+              number: 80
+  - host: bear.minikube
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bear
+            port:
+              number: 80
+  - host: moose.minikube
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moose
+            port:
+              number: 80
